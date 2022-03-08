@@ -4,3 +4,4 @@ venv/
 *.log
 *.pot
 *.pyc
+*.env
