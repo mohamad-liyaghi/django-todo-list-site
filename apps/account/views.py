@@ -44,18 +44,20 @@ def activate(request, uidb64, token):
 	if user is not None and account_activation_token.check_token(user, token):
 		user.is_active = True
 		user.save()
-		return HttpResponse('Your account has been activated successfully </br> <a href="#">Home page</a>')
+		return HttpResponse('Your account has been activated successfully </br> <a href="todo:home">Home page</a>')
 	else:
 		return HttpResponse('Link has been expired, please request for new one.')
 
 def logout_user(request):
 	logout(request)
 	messages.success(request, ("You Were Logged Out!"))
-	return redirect('home')
+	return redirect('todo:home')
+
+
 
 
 class login_user(LoginView):
 	template_name = "account/login.html"
 	def get_success_url(self):
-		user = self.request.user
-		reverse_lazy("account:login")
+		user = self.request.user	
+		return reverse_lazy('todo:home')

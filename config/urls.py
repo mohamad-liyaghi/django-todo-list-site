@@ -20,6 +20,6 @@ from apps.account.views import activate
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("account/",include("apps.account.urls")),
+    path("",include("apps.todo.urls")),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})/$', activate, name='activate'),
-
 ]
