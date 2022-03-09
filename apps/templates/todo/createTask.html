@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home page</title>
+</head>
+<body>
+    {%block content%}
+			    	<form method="POST" action="">
+			    		{%csrf_token%}
+			    		<table class="table table-striped table-hover table-bordered">
+				        <td>
+				        		  <div class="card-body">
+					        		<h5 class="card-title">{{form.name|as_crispy_field}}</h5>
+					        		<hr>
+					        		<div class="mb-3">
+						        		<li>{{form.detail|as_crispy_field}}</li><hr>
+						        	
+					        		<li>{{form.time_to_start|as_crispy_field}}</li><hr>
+				
+					        		<li>{{form.time_to_finish|as_crispy_field}}</li><hr>
+					        		</div>
+					        		<br>
+					        		<button  class="btn btn-outline-success btn-sm">Save</button>
+								</div>
+						</td>
+					</table>
+			    	</form>
+	    <br>
+    {%endblock%}
+</body>
+</html>
+
+<tr>
+			

@@ -6,12 +6,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Calendar</a>
+          <a class="nav-link" href="{%url 'todo:CreateTask'%}">Add Task</a>
         </li>
-      {% if user.is_authenticated %}
-        <li class="nav-item">
+              <li class="nav-item">
           <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
         </li>
       {% else %}

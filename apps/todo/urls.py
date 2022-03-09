@@ -1,8 +1,11 @@
 from django.urls import path
-from .views import home_page,detail
+from .views import home_page,updateTask,CreateTask,DeleteTask
 app_name = "todo"
 urlpatterns = [
     path("",home_page.as_view(),name="home"),
-    path("<int:pk>/",detail.as_view(),name="detail")
+    path("update/<int:pk>/",updateTask.as_view(),name="updateTask"),
+    path("create/",CreateTask.as_view(),name="CreateTask"),
+    path("delete/<int:pk>/",DeleteTask.as_view(),name="DeleteTask"),
+
 
 ]
