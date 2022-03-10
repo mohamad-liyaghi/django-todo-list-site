@@ -13,10 +13,9 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView
 from .forms import RegisterUserForm
 from .tokens import account_activation_token
-
 class register_user(CreateView):
 	form_class = RegisterUserForm
-	template_name = "account/register.html"
+	template_name =  "account/register.html"
 	def form_valid(self, form):
 		user = form.save(commit=False)
 		user.is_active = False
@@ -35,18 +34,21 @@ class register_user(CreateView):
 		)
 		email.send()
 		return HttpResponse('Please check your inboxes and confirm your email')
+
 def activate(request, uidb64, token):
-	try:
-		uid = force_str(urlsafe_base64_decode(uidb64))
-		user = User.objects.get(pk=uid)
-	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-		user = None
-	if user is not None and account_activation_token.check_token(user, token):
-		user.is_active = True
-		user.save()
-		return HttpResponse('Your account has been activated successfully </br> <a href="todo:home">Home page</a>')
-	else:
-		return HttpResponse('Link has been expired, please request for new one.')
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return redirect('todo:home')
+    else:
+        return HttpResponse('Activation link is invalid!')
 
 def logout_user(request):
 	logout(request)

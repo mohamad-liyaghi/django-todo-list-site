@@ -10,25 +10,27 @@
     
     	{%if user.is_authenticated%}
 		    	{%for tasks in object_list%}
-				    	<table class="table table-striped table-hover table-bordered">
-					        <td>
-					        		  <div class="card-body">
-						        		<h5 class="card-title">{{tasks.name}}</h5>
-						        		<hr>
-						        		<li>{{tasks.detail}}</li>
-						        		<li>beginning time : {{tasks.time_to_start}}</li>
-						        		<li>End time : {{tasks.time_to_finish}}</li>
-						        		{%if tasks.done == False%}
-						        			<li>Status : Unfinished </li>
-						        			<br>
-						        			<a href="{% url 'todo:updateTask' tasks.pk %}" class="btn btn-outline-secondary btn-sm">Update</a>
-											<a href="{%url 'todo:DeleteTask'  tasks.pk%}" class="btn btn-outline-danger btn-sm">Delete</a>
-						        		{%else%}
-						        			<li>Status : Done</li>
-						        		{%endif%}
-						        	  </div>
-							</td>
-						</table>
+	    				{{tasks.name.count}}
+						    	<table class="table table-striped table-hover table-bordered">
+							        <td>
+							        		  <div class="card-body">
+								        		<h5 class="card-title">{{tasks.name}}</h5>
+								        		<hr>
+								        		<li>{{tasks.detail}}</li>
+								        		<li>beginning time : {{tasks.time_to_start}}</li>
+								        		<li>End time : {{tasks.time_to_finish}}</li>
+								        		{%if tasks.done == False%}
+								        			<li>Status : Unfinished </li>
+								        			<br>
+								        			<a href="{% url 'todo:updateTask' tasks.pk %}" class="btn btn-outline-secondary btn-sm">Update</a>
+													<a href="{%url 'todo:DeleteTask'  tasks.pk%}" class="btn btn-outline-danger btn-sm">Delete</a>
+								        		{%else%}
+								        			<li>Status : Done</li>
+								        		{%endif%}
+								        	  </div>
+									</td>
+								</table>
+
 				{%endfor%}
 			
 	    {%else%}
