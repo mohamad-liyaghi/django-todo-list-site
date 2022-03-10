@@ -30,7 +30,7 @@ class CreateTask(LoginRequiredMixin,FormView):
 		owner_form.owner = self.request.user
 		owner_form.save()
 		return redirect('todo:home')
-class DeleteTask(DeleteView,UserTodoAccess):
+class DeleteTask(DeleteView):
 	model = task
 	success_url = reverse_lazy('todo:home')
 	template_name = "todo/DeleteTask.html"
