@@ -12,7 +12,7 @@
     			<a href="{%url 'todo:CreateTask'%}">Create new one!</a>
     		{%else%}
 		    	{%for tasks in object_list%}
-	    				{{tasks.name.count}}
+	    				{{tasks.count}}
 						    	<table class="table table-striped table-hover table-bordered">
 							        <td>
 							        		  <div class="card-body">

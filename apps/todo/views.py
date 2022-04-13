@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.views.generic import ListView, DeleteView,UpdateView,FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy 	
-from .models import task
+from todo.models import task
 from .forms import UpdateTodoForm
 from .mixins import UserTodoAccess
 # Create your views here.

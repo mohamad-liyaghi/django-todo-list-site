@@ -5,3 +5,4 @@ venv/
 *.pot
 *.pyc
 *.env
+db.sqlite3
