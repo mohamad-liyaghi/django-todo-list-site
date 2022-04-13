@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from account.models import User
 from django import forms
 class RegisterUserForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
@@ -7,7 +7,7 @@ class RegisterUserForm(UserCreationForm):
     last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email',"token",'password1', 'password2')
         help_texts = {
             'username': None,
             'email': None,

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from account.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -8,17 +8,22 @@ from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db import transaction
 from django.core.mail import EmailMessage
 from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView
+import uuid
 from .forms import RegisterUserForm
 from .tokens import account_activation_token
+
 class register_user(CreateView):
 	form_class = RegisterUserForm
 	template_name =  "account/register.html"
+	@transaction.atomic
 	def form_valid(self, form):
 		user = form.save(commit=False)
 		user.is_active = False
+		user.token =  uuid.uuid4().hex.upper()[0:12]
 		user.save()
 		current_site = get_current_site(self.request)
 		mail_subject = 'Active your account'
