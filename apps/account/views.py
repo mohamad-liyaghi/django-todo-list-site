@@ -11,11 +11,11 @@ from django.contrib import messages
 from django.db import transaction
 from django.core.mail import EmailMessage
 from django.contrib.auth.views import LoginView
-from django.views.generic import CreateView
+from django.views.generic import CreateView,ListView,View
 import uuid
 from .forms import RegisterUserForm
 from .tokens import account_activation_token
-
+from .mixins import AuthMixin
 class register_user(CreateView):
 	form_class = RegisterUserForm
 	template_name =  "account/register.html"
@@ -56,10 +56,13 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 def logout_user(request):
-	logout(request)
-	messages.success(request, ("You Were Logged Out!"))
-	return redirect('todo:home')
+	if request.user.is_authenticated:
+		logout(request)
+		messages.success(request, ("You Were Logged Out!"))
+		return redirect('todo:home')
 
+	else:
+		return redirect("account:login")
 
 
 
@@ -68,3 +71,17 @@ class login_user(LoginView):
 	def get_success_url(self):
 		user = self.request.user	
 		return reverse_lazy('todo:home')
+
+
+class Token(AuthMixin,ListView):
+	template_name="account/token.html"
+	def get_queryset(self):
+		token = self.request.user.token
+		return token
+
+class ChangeToken(AuthMixin,View):
+	def get(self,reqest):
+		User.objects.filter(username=self.request.user.username).update(
+			token= uuid.uuid4().hex.upper()[0:12]
+		)
+		return redirect("account:token")
