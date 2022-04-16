@@ -7,6 +7,7 @@ class task(models.Model):
     name = models.CharField(max_length=50)
     detail = models.TextField()
     owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    token = models.CharField(max_length=12,unique=True,blank=True,null=True)
     time_to_start = models.DateTimeField()
     time_to_finish = models.DateTimeField()
     done = models.BooleanField(default=False)

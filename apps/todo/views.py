@@ -1,7 +1,10 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.views.generic import ListView, DeleteView,UpdateView,FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy 	
+from django.urls import reverse_lazy
+
+import uuid
+
 from todo.models import task
 from .forms import UpdateTodoForm
 from .mixins import UserTodoAccess
@@ -28,6 +31,7 @@ class CreateTask(LoginRequiredMixin,FormView):
 	def form_valid(self,form):
 		owner_form = form.save(commit=False)
 		owner_form.owner = self.request.user
+		owner_form.token = uuid.uuid4().hex.upper()[0:12]
 		owner_form.save()
 		return redirect('todo:home')
 class DeleteTask(DeleteView):
