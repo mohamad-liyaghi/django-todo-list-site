@@ -13,6 +13,7 @@ class task(models.Model):
     done = models.BooleanField(default=False)
 
     def __str__(self):
+
         return self.name
 
     @property
