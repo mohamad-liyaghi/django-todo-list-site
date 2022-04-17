@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
@@ -51,4 +51,5 @@ class TaskDelete(APIView):
             return Response("Task has deleted")
         except:return Response("no such task found")
 
-
+def ApiView(request):
+    return render(request,"todo/api_list.html")
