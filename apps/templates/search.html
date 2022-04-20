@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+ <h2>Results: </h2><hr>
+    {%if object_list.count == 0%}
+        <h4>No results found</h4>
+    {%else%}
+        {% for task in object_list %}
+            <li><a href="{% url 'todo:updateTask' task.pk %}">{{ task.name }}</a></li><hr>
+        {%endfor%}
+    {%endif%}
+</ul>
+{%endblock%}

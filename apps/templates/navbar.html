@@ -18,6 +18,7 @@
               <li class="nav-item">
           <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
         </li>
+
       {% else %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'account:register_user' %}">Register</a>
@@ -29,6 +30,14 @@
       {% endif %}
 
       </ul>
+        {%if request.user.is_authenticated%}
+          <form class="d-flex" method="get" action="{%url 'todo:SearchTask'%}">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" placeholder="Search Tasks" aria-label="Search" name="nav_search">
+              <button class="btn btn-outline-secondary" type="submit">Search</button>
+          </form>
+      {%endif%}
+
     </div>
   </div>
 </nav>
