@@ -12,8 +12,9 @@ from .mixins import UserTodoAccess,DeleteTodoMixin
 # Create your views here.
 class home_page(LoginRequiredMixin,ListView):
 	template_name = 'todo/home.html'
+	paginate_by = 2
 	def get_queryset(self):
-		return  task.objects.filter(owner=self.request.user).order_by("done")
+		return  task.objects.filter(owner=self.request.user).order_by("time_to_start","done")
 class updateTask(LoginRequiredMixin,UserTodoAccess,UpdateView):
 	template_name = 'todo/updateTask.html'
 	model =  task
