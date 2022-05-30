@@ -10,5 +10,4 @@ class UpdateTodoForm(ModelForm):
 			'name': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Tasks Name'}),
 			'detail': forms.TextInput(attrs={'class':'form-control', 'placeholder':'write a few lines about your Task'}),
 			'time_to_start': forms.TextInput(attrs={'class':'form-control', 'placeholder':'YYYY-MM-DD HH:MM:SS'}),
-			'time_to_finish': forms.TextInput(attrs={'class':'form-control', 'placeholder':'YYYY-MM-DD HH:MM:SS'}),
 		}

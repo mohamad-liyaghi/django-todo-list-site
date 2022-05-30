@@ -19,6 +19,9 @@
 <b>Task delete</b>
 <li>curl {{ request.META.HTTP_HOST }}/api/v1/delete/{task_token}/<a href="{%url 'account:token'%}">{token}</a> </li>
 <hr>
+<b>Task Update status</b>
+<li>curl {{ request.META.HTTP_HOST }}/api/v1/update/{task_token}/<a href="{%url 'account:token'%}">{token}</a> </li>
+<hr>
 {%endblock%}
 </body>
 </html>

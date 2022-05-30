@@ -9,9 +9,9 @@ class TaskSerializer(serializers.ModelSerializer):
 class TaskCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = task
-        fields = ("name","detail","time_to_start","time_to_finish")
+        fields = ("name","detail","time_to_start")
 
 class TaskDerailSerializer(serializers.ModelSerializer):
     class Meta:
         model = task
-        fields = ("name","detail","time_to_start","time_to_finish","done","token")
+        fields = ("name","detail","time_to_start","done","token")
