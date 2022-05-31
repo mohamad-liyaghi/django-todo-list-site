@@ -7,8 +7,9 @@ from rest_framework.response import Response
 
 import uuid
 
-from .serializers import TaskSerializer,TaskCreateSerializer,TaskDerailSerializer
+from .serializers import TaskSerializer,TaskCreateSerializer,TaskDerailSerializer,RegisterUserSerializer
 from todo.models import task
+from account.models import User
 from account.models import User
 
 class ApiHomeView(APIView):
@@ -19,7 +20,8 @@ class ApiHomeView(APIView):
         api_list = [
             {"List of tasks:" : "api/v1/list/<user-token>/"},
             {"Tasks detail" : "/api/v1/detail/<task-token>/<task-owner>/"},
-            {"Create task" : "/api/v1/create/<owner-token>/"}
+            {"Create task" : "/api/v1/create/<owner-token>/"},
+            {"Update your tasks status" : "/api/v1/update/<task-token>/<owner-token>/"}
         ]
         return Response(api_list)
 
@@ -78,6 +80,25 @@ def TaskUpdateStatus(request, token, owner):
         return JsonResponse({'done': 'Task updated successfully'}, status=200)
     else:
         return JsonResponse({'error': 'Task is already done'}, status=401)
+
+def tbLoginApi(request, username, token):
+    '''
+        This page check if a user is registered or no
+        then it will be proccessed in the telegram bot
+    '''
+    user = User.objects.filter(Q(token=token) & Q(username=username))
+    if user:
+        return JsonResponse({"found" : "user exist in db"})
+    else:
+        return JsonResponse({"error" : "user does not exist"})
+
+class tbRegisterApi(CreateAPIView):
+    '''
+        Tb users can register by this api
+    '''
+    queryset = User.objects.all()
+    serializer_class = RegisterUserSerializer
+
 
 
 
