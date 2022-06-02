@@ -81,14 +81,36 @@ def TaskUpdateStatus(request, token, owner):
     else:
         return JsonResponse({'error': 'Task is already done'}, status=401)
 
-def tbLoginApi(request, username, token):
+def tbLoginApi(request, username, token, userid):
     '''
         This page check if a user is registered or no
         then it will be proccessed in the telegram bot
     '''
-    user = User.objects.filter(Q(token=token) & Q(username=username))
+    user = User.objects.filter(Q(token=token) & Q(username=username)).first()
     if user:
-        return JsonResponse({"found" : "user exist in db"})
+        if user.telegram_id is None:
+            user.telegram_id = userid
+            user.save()
+            return JsonResponse({"found" : "user exist in db"})
+        else:
+            return JsonResponse({"login-error": "user is already logged in"})
+    else:
+        return JsonResponse({"error" : "user does not exist"})
+
+
+def tbLogoutApi(request, username, token, userid):
+    '''
+        This page check if a user is registered or no
+        then it will be proccessed in the telegram bot
+    '''
+    user = User.objects.filter(Q(token=token) & Q(username=username)).first()
+    if user:
+        if user.telegram_id == userid:
+            user.telegram_id = None
+            user.save()
+            return JsonResponse({"done" : "user logged out"})
+        else:
+            return JsonResponse({"userid-error": "user id is wrong"})
     else:
         return JsonResponse({"error" : "user does not exist"})
 
