@@ -23,7 +23,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         password = serializers.ReadOnlyField()
-        fields = ('first_name', 'last_name','telegram_id', "token", "password" )
+        fields = ('username', 'first_name', 'last_name','telegram_id', "token", "password" )
 
     def create(self, validated_data):
         '''
