@@ -14,13 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include,re_path
-from apps.account.views import activate
+from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("account/",include("apps.account.urls")),
     path("api/v1/",include("apps.api.urls")),
     path("",include("apps.todo.urls")),
-    re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})/$', activate, name='activate'),
 ]
