@@ -43,13 +43,14 @@ class TaskAdd(CreateAPIView):
     queryset = task.objects.all()
     serializer_class = TaskCreateSerializer
     def create(self,request,owner):
-        request.data._mutable = True
-        data = request.data
+        data = self.request.data
         serializer = TaskCreateSerializer(data=data, partial=True)
         task_owner = User.objects.get(token=owner)
         if serializer.is_valid():
             serializer = serializer.save(owner=task_owner,token=uuid.uuid4().hex.upper()[0:12])
-        return Response("data saved")
+            return JsonResponse({"token" : serializer.token})
+        else:
+            return JsonResponse({"error" : "sth is wrong with your information"})
 
 class TaskDetail(APIView):
     '''
