@@ -59,7 +59,7 @@ class TaskDetail(APIView):
     queryset = task.objects.all()
     serializer_class = TaskCreateSerializer
     def get(self,request,owner,token):
-        queryset = get_object_or_404(task, Q(token=token) & Q(owner__token=owner))
+        queryset = task.objects.filter(Q(token=token) & Q(owner__token=owner))
         serializer = TaskDerailSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -69,9 +69,22 @@ class TaskDelete(APIView):
     '''
     def get(self,request,token,owner):
         try:
-            get_object_or_404(task, Q(token=token) & Q(owner__token=owner)).delete
+            task.objects.filter(Q(token=token) & Q(owner__token=owner)).delete()
             return Response("Task  deleted")
         except:return Response("no such task found")
+
+class TaskAutoDelete(APIView):
+    '''
+        Remove done tasks
+    '''
+    def get(self,request,owner):
+        try:
+            task.objects.filter(Q(owner__token=owner) & Q(done=True)).delete()
+
+            return Response("some tasks removed")
+        except:
+            return Response("no changes detected")
+
 
 def TaskUpdateStatus(request, token, owner):
     object = task.objects.filter(Q(token=token) & Q(owner__token=owner)).first()
