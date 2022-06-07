@@ -14,7 +14,6 @@
 <br/>
 		<form action="{% url 'account:register_user' %}" method=POST>
 			{% csrf_token %}
-			{{ form.username|as_crispy_field }}<hr>
 			{{ form.first_name|as_crispy_field }}<hr>
 			{{ form.last_name|as_crispy_field }}<hr>
 			{{ form.password1|as_crispy_field }}<hr>

@@ -24,6 +24,7 @@ class register_user(RegitsterMixin,CreateView):
 	def form_valid(self,  form):
 		user = form.save(commit=False)
 		user.token =  uuid.uuid4().hex.upper()[0:12]
+		user.username = user.first_name + user.last_name + uuid.uuid4().hex.upper()[0:4]
 		user.save()
 		login(self.request, user)
 		messages.success(self.request, ("You Were registered successfully!"))

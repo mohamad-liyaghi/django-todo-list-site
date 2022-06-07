@@ -1,3 +1,4 @@
+
 """
 Django settings for config project.
 
@@ -13,7 +14,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 import sys
-from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -110,7 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'rest_framework.authentication.BasicAuthentication',
+    ]
+}
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -131,23 +135,13 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_USE_TLS = True
-EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
-PROJECT_ROOT = os.path.normpath(os.path.dirname(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 AUTH_USER_MODEL = "account.User"
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-    'rest_framework.authentication.BasicAuthentication',
-    ]
-
-}
