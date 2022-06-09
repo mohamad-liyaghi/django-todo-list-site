@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-Token: {{object_list}}
+Hello {{request.user.username}}, this is your token: {{object_list}}
 <br><hr>
 <a href="{%url 'account:change-token'%}"><input class="btn btn-danger" type="button" value="Revoke"></a>
 {% endblock %}

@@ -78,12 +78,9 @@ class TaskAutoDelete(APIView):
         Remove done tasks
     '''
     def get(self,request,owner):
-        try:
-            task.objects.filter(Q(owner__token=owner) & Q(done=True)).delete()
-
+            obj = get_object_or_404(task, Q(owner__token=owner) & Q(done=True))
+            obj.delete()
             return Response("some tasks removed")
-        except:
-            return Response("no changes detected")
 
 
 def TaskUpdateStatus(request, token, owner):

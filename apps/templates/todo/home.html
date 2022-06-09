@@ -8,9 +8,10 @@
 </head>
 <body>
     {%block content%}
+		<h4>Hello {{request.user.username}}!</h4>
     		{%if object_list.count == 0%}
-    			<h3>You dont have any todo... </h3>
-    			<a href="{%url 'todo:CreateTask'%}">Create new one!</a>
+    			<h4>You dont have any todo... </h4>
+    			<br><a class="btn btn-secondary" href="{%url 'todo:CreateTask'%}">Create new one!</a>
     		{%else%}
 		    	{%for tasks in object_list%}
 	    				{{tasks.count}}
@@ -20,7 +21,7 @@
 								        		<h5 class="card-title">{{tasks.name}}</h5>
 								        		<hr>
 								        		<li>{{tasks.detail}}</li>
-												<li>Start: {{tasks.time_to_start|naturaltime}}</li>
+												<li>time: {{tasks.time_to_start|naturaltime}}</li>
 								        		{%if tasks.done == False%}
 								        			<li>Status : Unfinished </li>
 												{%else%}
