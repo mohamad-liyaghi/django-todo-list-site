@@ -89,3 +89,14 @@ class UpdateProject(LoginRequiredMixin, UserProjectAccess, UpdateView):
 
 	def get_object(self):
 		return get_object_or_404(project, token=self.kwargs['token'])
+
+class listProject(LoginRequiredMixin, ListView):
+	'''
+		This is the page to list all the projects
+	'''
+
+	template_name = 'todo/project/listProject.html'
+	paginate_by = 2
+
+	def get_queryset(self):
+		return  project.objects.filter(owner=self.request.user).order_by("status")
