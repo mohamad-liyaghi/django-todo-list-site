@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import ModelForm
-from .models import task
+from .models import task, project
 
-class UpdateTodoForm(ModelForm):
+class TodoForm(ModelForm):
 	class Meta:
 		model = task
 		fields = "__all__"
@@ -11,3 +11,8 @@ class UpdateTodoForm(ModelForm):
 			'detail': forms.TextInput(attrs={'class':'form-control', 'placeholder':'write a few lines about your Task'}),
 			'time_to_start': forms.TextInput(attrs={'class':'form-control', 'placeholder':'YYYY-MM-DD HH:MM:SS'}),
 		}
+
+class ProjectForm(ModelForm):
+	class Meta:
+		model = project
+		fields = "__all__"

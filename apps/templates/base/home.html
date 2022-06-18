@@ -1,4 +1,4 @@
-{%extends 'base.html'%}
+{%extends 'base/base.html'%}
 {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
@@ -28,8 +28,8 @@
 													<li>Status : Done</li>
 												{%endif%}
 								        			<br>
-								        			<a href="{% url 'todo:updateTask' tasks.pk %}" class="btn btn-outline-secondary btn-sm">Datail</a>
-													<a href="{%url 'todo:DeleteTask'  tasks.pk%}" class="btn btn-outline-danger btn-sm">Delete</a>
+								        			<a href="{% url 'todo:updateTask' tasks.token %}" class="btn btn-outline-secondary btn-sm">Datail</a>
+													<a href="{%url 'todo:DeleteTask'  tasks.token %}" class="btn btn-outline-danger btn-sm">Delete</a>
 								        	  </div>
 									</td>
 								</table>
