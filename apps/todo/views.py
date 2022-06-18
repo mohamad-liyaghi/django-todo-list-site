@@ -8,10 +8,13 @@ import uuid, json
 
 from todo.models import task, project
 from .forms import TodoForm, ProjectForm
-from .mixins import UserTodoAccess, DeleteTodoMixin
+from .mixins import UserTodoAccess, DeleteTodoMixin, UserProjectAccess
 
-# Create your views here.
+# Codes for Todo stuff
 class home_page(LoginRequiredMixin, ListView):
+	'''
+		This is the home page and a list of all the tasks
+	'''
 	template_name = 'base/home.html'
 	paginate_by = 2
 
@@ -19,6 +22,9 @@ class home_page(LoginRequiredMixin, ListView):
 		return  task.objects.filter(owner=self.request.user).order_by("time_to_start","done")
 
 class updateTask(LoginRequiredMixin, UserTodoAccess, UpdateView):
+	'''
+		This is the page to update a task
+	'''
 	template_name = 'todo/task/updateTask.html'
 	fields = ["name", "detail", "time_to_start", "token" ,"done"]
 	success_url = 'todo:home'
@@ -27,6 +33,9 @@ class updateTask(LoginRequiredMixin, UserTodoAccess, UpdateView):
 		return get_object_or_404(task, token=self.kwargs['token'])
 	
 class CreateTask(LoginRequiredMixin, FormView):
+	'''
+		This is the page to create a task
+	'''
 	template_name = 'todo/task/createTask.html'
 	form_class = TodoForm
 	success_url = 'todo:home'
@@ -39,6 +48,9 @@ class CreateTask(LoginRequiredMixin, FormView):
 		return redirect('todo:home')
 
 class DeleteTask(DeleteTodoMixin,DeleteView):
+	'''
+		This is the page to delete a task
+	'''
 	model = task
 	success_url = reverse_lazy('todo:home')
 	template_name = "todo/task/DeleteTask.html"
@@ -52,8 +64,11 @@ class SearchTask(ListView):
         object_list =  task.objects.filter(Q(name__icontains=query))
         return object_list.filter(owner=self.request.user)
 
-
+# Codes for Project stuff
 class CreateProject(LoginRequiredMixin, FormView):
+	'''
+		This is the page to create a project
+	'''
 	template_name = "todo/project/createProject.html"
 	form_class = ProjectForm
 
@@ -63,3 +78,14 @@ class CreateProject(LoginRequiredMixin, FormView):
 		form.token = uuid.uuid4().hex.upper()[0:12]
 		form.save()
 		return redirect("todo:home")
+
+class UpdateProject(LoginRequiredMixin, UserProjectAccess, UpdateView):
+	'''
+		This is the page to update a project
+	'''
+	template_name = 'todo/project/updateProject.html'
+	fields = ["name", "detail", "deadline" ,"status", "token"]
+	success_url = reverse_lazy('todo:home') 
+
+	def get_object(self):
+		return get_object_or_404(project, token=self.kwargs['token'])
