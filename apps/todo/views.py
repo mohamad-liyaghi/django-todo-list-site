@@ -4,11 +4,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.db.models import Q
 
-import uuid, json
+import uuid
 
 from todo.models import task, project
 from .forms import TodoForm, ProjectForm, ProjectTaskForm
-from .mixins import UserTodoAccess, DeleteTodoMixin, UserProjectAccess
+from .mixins import UserTodoAccess, DeleteTodoMixin, UserProjectAccess, DeleteProjectMixin
 
 # Codes for Todo stuff
 class home_page(LoginRequiredMixin, ListView):
@@ -77,7 +77,7 @@ class CreateProject(LoginRequiredMixin, FormView):
 		form.owner = self.request.user
 		form.token = uuid.uuid4().hex.upper()[0:12]
 		form.save()
-		return redirect("todo:home")
+		return redirect("todo:listProject")
 
 class UpdateProject(LoginRequiredMixin, UserProjectAccess, UpdateView):
 	'''
@@ -85,10 +85,23 @@ class UpdateProject(LoginRequiredMixin, UserProjectAccess, UpdateView):
 	'''
 	template_name = 'todo/project/updateProject.html'
 	fields = ["name", "detail", "deadline" ,"status", "token"]
-	success_url = reverse_lazy('todo:home') 
+	success_url = reverse_lazy('todo:listProject') 
 
 	def get_object(self):
 		return get_object_or_404(project, token=self.kwargs['token'])
+
+class DeleteProject(LoginRequiredMixin, DeleteProjectMixin, DeleteView):
+	'''
+		This is the page to delete a project
+	'''
+	success_url = reverse_lazy('todo:listProject')
+	template_name = "todo/project/DeleteProject.html"
+	
+	def get_object(self):
+		object = get_object_or_404(project, token=self.kwargs['token'])
+		object.task.all().delete()
+		return object
+
 
 class listProject(LoginRequiredMixin, ListView):
 	'''
@@ -101,6 +114,7 @@ class listProject(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		return  project.objects.filter(owner=self.request.user).order_by("status")
 
+
 class ListProjectTask(LoginRequiredMixin, ListView):
 	'''
 		This is the page to list all the tasks of a project
@@ -109,6 +123,7 @@ class ListProjectTask(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		project_token = self.kwargs["token"]
 		return task.objects.filter(project__token= project_token).order_by("time_to_start","done")
+
 
 class CreateProjectTask(LoginRequiredMixin, FormView):
 	'''
@@ -124,4 +139,4 @@ class CreateProjectTask(LoginRequiredMixin, FormView):
 		form.token = uuid.uuid4().hex.upper()[0:12]
 		form.save()
 		project_model.task.add(form)
-		return redirect('todo:home')
+		return redirect('todo:listProject')

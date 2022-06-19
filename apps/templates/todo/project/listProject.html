@@ -39,7 +39,7 @@
                                                     <a href="{%url 'todo:listProjectTask' project.token %}" class="btn btn-outline-secondary btn-sm">Tasks</a>
                                                     <a href="{%url 'todo:CreateProjectTask' project.token %}" class="btn btn-outline-secondary btn-sm">Add Task</a>
 													<a href="{% url 'todo:updateProject' project.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
-													<a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
+													<a href="{%url 'todo:DeleteProject' project.token%}" class="btn btn-outline-danger btn-sm">Delete</a>
 								        	  </div>
 									</td>
 								</table>
