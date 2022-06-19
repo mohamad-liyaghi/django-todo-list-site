@@ -2,7 +2,7 @@ from django.urls import path
 from todo.views import (home_page,
                         updateTask, CreateTask, DeleteTask, SearchTask,
                         listProject, ListProjectTask, 
-                        CreateProject, UpdateProject)
+                        CreateProject, UpdateProject, CreateProjectTask)
 app_name = "todo"
 
 urlpatterns = [
@@ -13,6 +13,7 @@ urlpatterns = [
     path("update-project/<str:token>/", UpdateProject.as_view(),name="updateProject"),
     path("create-task/",CreateTask.as_view(),name="CreateTask"),
     path("create-project/", CreateProject.as_view(), name='CreateProject'),
+    path("create-project-task/<str:token>/", CreateProjectTask.as_view(), name='CreateProjectTask'),
     path("delete-task/<str:token>/",DeleteTask.as_view(),name="DeleteTask"),
     path("search/",SearchTask.as_view(),name="SearchTask")
 ]

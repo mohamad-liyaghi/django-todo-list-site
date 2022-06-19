@@ -7,7 +7,7 @@ from django.db.models import Q
 import uuid, json
 
 from todo.models import task, project
-from .forms import TodoForm, ProjectForm
+from .forms import TodoForm, ProjectForm, ProjectTaskForm
 from .mixins import UserTodoAccess, DeleteTodoMixin, UserProjectAccess
 
 # Codes for Todo stuff
@@ -27,7 +27,7 @@ class updateTask(LoginRequiredMixin, UserTodoAccess, UpdateView):
 	'''
 	template_name = 'todo/task/updateTask.html'
 	fields = ["name", "detail", "time_to_start", "token" ,"done"]
-	success_url = 'todo:home'
+	success_url = reverse_lazy('todo:home')
 
 	def get_object(self):
 		return get_object_or_404(task, token=self.kwargs['token'])
@@ -106,8 +106,22 @@ class ListProjectTask(LoginRequiredMixin, ListView):
 		This is the page to list all the tasks of a project
 	'''
 	template_name = 'todo/project/listProjectTask.html'
-	paginate_by = 2
-
 	def get_queryset(self):
 		project_token = self.kwargs["token"]
 		return task.objects.filter(project__token= project_token).order_by("time_to_start","done")
+
+class CreateProjectTask(LoginRequiredMixin, FormView):
+	'''
+		This is the page to create a task in a project
+	'''
+	template_name = 'todo/project/createProjectTask.html'
+	form_class = ProjectTaskForm
+
+	def form_valid(self, form):
+		form = form.save(commit= False)
+		project_model = project.objects.filter(token=self.kwargs['token']).first()
+		form.owner = self.request.user
+		form.token = uuid.uuid4().hex.upper()[0:12]
+		form.save()
+		project_model.task.add(form)
+		return redirect('todo:home')

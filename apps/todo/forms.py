@@ -16,3 +16,8 @@ class ProjectForm(ModelForm):
 	class Meta:
 		model = project
 		fields = "__all__"
+
+class ProjectTaskForm(ModelForm):
+	class Meta:
+		model = task
+		fields = "__all__"
