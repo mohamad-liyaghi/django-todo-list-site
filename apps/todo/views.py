@@ -100,3 +100,14 @@ class listProject(LoginRequiredMixin, ListView):
 
 	def get_queryset(self):
 		return  project.objects.filter(owner=self.request.user).order_by("status")
+
+class ListProjectTask(LoginRequiredMixin, ListView):
+	'''
+		This is the page to list all the tasks of a project
+	'''
+	template_name = 'todo/project/listProjectTask.html'
+	paginate_by = 2
+
+	def get_queryset(self):
+		project_token = self.kwargs["token"]
+		return task.objects.filter(project__token= project_token).order_by("time_to_start","done")
