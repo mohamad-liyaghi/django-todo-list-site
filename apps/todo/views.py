@@ -7,7 +7,7 @@ from django.db.models import Q
 import uuid
 
 from todo.models import task, project
-from .forms import TodoForm, ProjectForm, ProjectTaskForm
+from .forms import TodoForm, ProjectForm, ProjectTaskForm, RoutineForm
 from .mixins import UserTodoAccess, DeleteTodoMixin, UserProjectAccess, DeleteProjectMixin
 
 # Codes for Todo stuff
@@ -140,3 +140,19 @@ class CreateProjectTask(LoginRequiredMixin, FormView):
 		form.save()
 		project_model.task.add(form)
 		return redirect('todo:listProject')
+
+# Codes for Routine stuff
+class CreateRoutine(LoginRequiredMixin, FormView):
+	'''
+		This is the page to create a routine
+	'''
+	template_name = "todo/routine/createRoutine.html"
+	form_class = RoutineForm
+	
+	def form_valid(self, form):
+		unsaved_form = form.save(commit= False)
+		unsaved_form.owner = self.request.user
+		unsaved_form.token = uuid.uuid4().hex.upper()[0:12]
+		unsaved_form.save()
+		form.save_m2m()
+		return redirect("todo:listRoutine")
