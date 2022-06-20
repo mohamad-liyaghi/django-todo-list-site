@@ -6,9 +6,9 @@ from django.db.models import Q
 
 import uuid
 
-from todo.models import task, project
+from todo.models import task, project, routine
 from .forms import TodoForm, ProjectForm, ProjectTaskForm, RoutineForm
-from .mixins import UserTodoAccess, DeleteTodoMixin, UserProjectAccess, DeleteProjectMixin
+from .mixins import UserTodoAccess, DeleteTodoMixin, UserProjectAccess, DeleteProjectMixin, UserRoutineAccess
 
 # Codes for Todo stuff
 class home_page(LoginRequiredMixin, ListView):
@@ -156,3 +156,14 @@ class CreateRoutine(LoginRequiredMixin, FormView):
 		unsaved_form.save()
 		form.save_m2m()
 		return redirect("todo:listRoutine")
+
+class UpdateRoutine(LoginRequiredMixin, UserRoutineAccess, UpdateView):
+	'''
+		This is the page to update a routine
+	'''
+	template_name = 'todo/routine/updateRoutine.html'
+	fields = ["title", "detail", "token" ,"time", "days"]
+	success_url = reverse_lazy('todo:listRoutine')
+
+	def get_object(self):
+		return get_object_or_404(routine, token=self.kwargs['token'])

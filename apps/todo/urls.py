@@ -4,7 +4,7 @@ from todo.views import (home_page,
                         listProject, ListProjectTask, 
                         CreateProject, UpdateProject,DeleteProject, 
                          CreateProjectTask,
-                         CreateRoutine,)
+                         CreateRoutine, UpdateRoutine)
 app_name = "todo"
 
 urlpatterns = [
@@ -14,6 +14,7 @@ urlpatterns = [
 
     path("update-task/<str:token>/", updateTask.as_view(),name="updateTask"),
     path("update-project/<str:token>/", UpdateProject.as_view(),name="updateProject"),
+    path("update-routine/<str:token>/", UpdateRoutine.as_view(),name="updateRoutine"),
 
     path("create-task/",CreateTask.as_view(),name="CreateTask"),
     path("create-project/", CreateProject.as_view(), name='CreateProject'),
