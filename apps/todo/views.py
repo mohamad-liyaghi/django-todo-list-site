@@ -178,3 +178,14 @@ class DeleteRoutine(LoginRequiredMixin, DeleteRoutineMixin, DeleteView):
 	def get_object(self):
 		object = get_object_or_404(routine, token=self.kwargs['token'])
 		return object
+		
+class listRoutine(LoginRequiredMixin, ListView):
+	'''
+		This is the page to list all the routines
+	'''
+
+	template_name = 'todo/routine/listRoutine.html'
+	paginate_by = 2
+
+	def get_queryset(self):
+		return routine.objects.filter(owner= self.request.user).order_by("time")

@@ -4,43 +4,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>home page</title>
+    <title>Routine list page</title>
 </head>
 <body>
     {%block content%}
-		<h4>Hello {{request.user.username}}!</h4>
+		<h4>Your routines:</h4>
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-			  <a class="nav-link active" aria-current="page" href="{%url 'todo:home'%}">Tasks</a>
+			  <a class="nav-link"  href="{%url 'todo:home'%}">Tasks</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link" href="{%url 'todo:listProject' %}">Projects</a>
+			  <a class="nav-link active" aria-current="page" href="{%url 'todo:listProject' %}">Projects</a>
 			</li>
-			<li class="nav-item">
+            <li class="nav-item">
 				<a class="nav-link active" aria-current="page" href="{%url 'todo:listRoutine' %}">Routine</a>
 			  </li>
 		  </ul>
     		{%if object_list.count == 0%}
-    			<h4>You dont have any todo... </h4>
-    			<br><a class="btn btn-secondary" href="{%url 'todo:CreateTask'%}">Create new one!</a>
+    			<h4>You dont have any routines... </h4>
+    			<br><a class="btn btn-secondary" href="{%url 'todo:CreateRoutine'%}">Create new one!</a>
     		{%else%}
-		    	{%for tasks in object_list%}
-	    				{{tasks.count}}
+		    	{%for routine in object_list%}
+	    				{{routine.count}}
 						    	<table class="table table-striped table-hover table-bordered">
 							        <td>
 							        		  <div class="card-body">
-								        		<h5 class="card-title">{{tasks.name}}</h5>
+								        		<h5 class="card-title">{{routine.title}}</h5>
 								        		<hr>
-								        		<li>{{tasks.detail}}</li>
-												<li>time: {{tasks.time_to_start|naturaltime}}</li>
-								        		{%if tasks.done == False%}
-								        			<li>Status : Unfinished </li>
-												{%else%}
-													<li>Status : Done</li>
-												{%endif%}
+								        		<li>{{routine.detail}}</li> 
+                                                <li>{{routine.time}}</li>
+                                                <li>Days: {% for day in routine.days.all%}{{day}} {%endfor%}</li>
 								        			<br>
-								        			<a href="{% url 'todo:updateTask' tasks.token %}" class="btn btn-outline-secondary btn-sm">Datail</a>
-													<a href="{%url 'todo:DeleteTask'  tasks.token %}" class="btn btn-outline-danger btn-sm">Delete</a>
+													<a href="{% url 'todo:updateRoutine' routine.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
+													<a href="{%url 'todo:DeleteRoutine' routine.token%}" class="btn btn-outline-danger btn-sm">Delete</a>
 								        	  </div>
 									</td>
 								</table>
@@ -54,11 +50,11 @@
 
 										  {% if not search %}
 										  <li class="page-item">
-											  <a class="page-link" href="{% url 'todo:home' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+											  <a class="page-link" href="{% url 'todo:listRoutine' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
 										  </li>
 										  {% else %}
 											<li class="page-item">
-											  <a class="page-link" href="{% url 'todo:home' %}?{{search}}&page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+											  <a class="page-link" href="{% url 'todo:listRoutine' %}?{{search}}&page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
 										  </li>
 										  {% endif %}
 										{% else %}
@@ -67,16 +63,16 @@
 										</li>
 										{% endif %} 
 										{% for object in page_obj.paginator.page_range %}
-											<li class="page-item"><a class="page-link" href="{% url 'todo:home' %}?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+											<li class="page-item"><a class="page-link" href="{% url 'todo:listRoutine' %}?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
 										{% endfor %} 
 										{% if page_obj.has_next %}
 										  {% if not search %}
 										  <li class="page-item">
-											  <a class="page-link" href="{% url 'todo:home' %}?page={{ page_obj.next_page_number }}">Next</a>
+											  <a class="page-link" href="{% url 'todo:listRoutine' %}?page={{ page_obj.next_page_number }}">Next</a>
 										  </li>
 										  {% else %}
 											<li class="page-item">
-											  <a class="page-link" href="{% url 'todo:home' %}?{{search}}&page={{ page_obj.next_page_number }}">Next</a>
+											  <a class="page-link" href="{% url 'todo:listRoutine' %}?{{search}}&page={{ page_obj.next_page_number }}">Next</a>
 										  </li>
 										  {% endif %}
 										{% else %}
