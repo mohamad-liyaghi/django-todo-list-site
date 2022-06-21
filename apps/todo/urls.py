@@ -1,10 +1,15 @@
 from django.urls import path
-from todo.views import (home_page,
-                        updateTask, CreateTask, DeleteTask, SearchTask,
-                        listProject, ListProjectTask, 
-                        CreateProject, UpdateProject,DeleteProject, 
-                         CreateProjectTask,
-                         CreateRoutine, UpdateRoutine, DeleteRoutine, listRoutine)
+
+from .views.task_views import (home_page,
+                                updateTask, CreateTask, DeleteTask, SearchTask)
+
+from .views.project_views import (listProject, ListProjectTask,
+                                  CreateProject, CreateProjectTask, UpdateProject, DeleteProject)
+
+from .views.routine_views import (listRoutine,
+                                     CreateRoutine, UpdateRoutine, DeleteRoutine, )
+
+
 app_name = "todo"
 
 urlpatterns = [
