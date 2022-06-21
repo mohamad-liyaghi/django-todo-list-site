@@ -42,3 +42,11 @@ class UserRoutineAccess():
 			return super().dispatch(request, *args, **kwargs)
 		else:
 			return redirect("todo:home")
+
+class DeleteRoutineMixin():
+	def dispatch(self, request, token, *args, **kwargs):
+		self_routine = get_object_or_404(routine, token= token)
+		if self_routine.owner == self.request.user:
+			return super().dispatch(request, *args, **kwargs)
+		else:
+			return redirect("todo:home")

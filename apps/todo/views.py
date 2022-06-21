@@ -8,7 +8,7 @@ import uuid
 
 from todo.models import task, project, routine
 from .forms import TodoForm, ProjectForm, ProjectTaskForm, RoutineForm
-from .mixins import UserTodoAccess, DeleteTodoMixin, UserProjectAccess, DeleteProjectMixin, UserRoutineAccess
+from .mixins import UserTodoAccess, DeleteTodoMixin, UserProjectAccess, DeleteProjectMixin, UserRoutineAccess, DeleteRoutineMixin
 
 # Codes for Todo stuff
 class home_page(LoginRequiredMixin, ListView):
@@ -167,3 +167,14 @@ class UpdateRoutine(LoginRequiredMixin, UserRoutineAccess, UpdateView):
 
 	def get_object(self):
 		return get_object_or_404(routine, token=self.kwargs['token'])
+
+class DeleteRoutine(LoginRequiredMixin, DeleteRoutineMixin, DeleteView):
+	'''
+		This is the page to delete a routine
+	'''
+	success_url = reverse_lazy('todo:listRoutine')
+	template_name = "todo/routine/DeleteRoutine.html"
+
+	def get_object(self):
+		object = get_object_or_404(routine, token=self.kwargs['token'])
+		return object
