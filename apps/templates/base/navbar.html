@@ -7,11 +7,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {% if user.is_authenticated %}
-
-        <li class="nav-item">
-          <a class="nav-link" href="{%url 'todo:CreateTask'%}">Add Task</a>
-        </li>
-        </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Add
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{%url 'todo:CreateTask'%}">Add Task</a>
+          <a class="dropdown-item" href="{%url 'todo:CreateProject'%}">Add Project</a>
+          <a class="dropdown-item" href="{%url 'todo:CreateRoutine'%}">Add Routine</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
               <li class="nav-item">
           <a class="nav-link" href="{% url 'account:token' %}">Token</a>
         </li>

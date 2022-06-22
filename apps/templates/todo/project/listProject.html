@@ -19,9 +19,12 @@
 			<li class="nav-item">
 				<a class="nav-link" aria-current="page" href="{%url 'todo:listRoutine' %}">Routine</a>
 			  </li>
+			<li class="nav-item">
+				<a class="nav-link" aria-current="page" href="{%url 'todo:CreateProject' %}">Add Project</a>
+			  </li>
 		  </ul>
     		{%if object_list.count == 0%}
-    			<h4>You dont have any todo... </h4>
+    			<h4>No Projects available... </h4>
     			<br><a class="btn btn-secondary" href="{%url 'todo:CreateProject'%}">Create new one!</a>
     		{%else%}
 		    	{%for project in object_list%}

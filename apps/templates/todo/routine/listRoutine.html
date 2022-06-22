@@ -19,9 +19,12 @@
             <li class="nav-item">
 				<a class="nav-link active" aria-current="page" href="{%url 'todo:listRoutine' %}">Routine</a>
 			  </li>
+			<li class="nav-item">
+				<a class="nav-link" aria-current="page" href="{%url 'todo:CreateRoutine' %}">Add Routine</a>
+			  </li>
 		  </ul>
     		{%if object_list.count == 0%}
-    			<h4>You dont have any routines... </h4>
+    			<h4>No routines available... </h4>
     			<br><a class="btn btn-secondary" href="{%url 'todo:CreateRoutine'%}">Create new one!</a>
     		{%else%}
 		    	{%for routine in object_list%}
