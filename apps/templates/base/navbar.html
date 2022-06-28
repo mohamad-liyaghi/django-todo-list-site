@@ -19,22 +19,22 @@
         </div>
       </li>
               <li class="nav-item">
-          <a class="nav-link" href="{% url 'account:token' %}">Token</a>
+          <a class="nav-link" href="{% url 'todo:token' %}">Token</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{%url 'api:api-list'%}">API</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
+          <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
         </li>
 
       {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'account:register_user' %}">Register</a>
+          <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+          <a class="nav-link" href="{% url 'account_login' %}">Login</a>
         </li>
       {% endif %}
 

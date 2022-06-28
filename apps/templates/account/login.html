@@ -1,21 +1,14 @@
 {%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
 {% block content %}
 	<h1>Login</h1>
   <title>Login</title>
 <br/>
-		<form action="" method=POST>
-			{% csrf_token %}
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Username</label>
-            <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+  <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}<br/>
 
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password">
-          </div>
-                    <input type="submit" value="Login" class="btn btn-secondary">
-
-		</form>
+      <button class="btn btn-secondary" type="submit">Log In</button>
+  </form>
 <br/><br/>	
 {% endblock %}

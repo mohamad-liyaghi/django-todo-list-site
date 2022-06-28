@@ -18,9 +18,9 @@ import sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
-LOGIN_REDIRECT_URL = "account:home"
-LOGIN_URL = "account:login"
-LOGOUT_REDIRECT_URL = "account:login"
+LOGIN_REDIRECT_URL = "todo:home"
+LOGIN_URL = "account_login"
+LOGOUT_REDIRECT_URL = "account_login"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -35,15 +35,22 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+
     'rest_framework',
-    'apps.accounts',
-    'apps.todo',
     'crispy_forms',
+
+    'allauth',
+    'allauth.account',
+
+    'apps.accounts.apps.AccountsConfig',
+    'apps.todo.apps.TodoConfig',
+   
 ]
 
 # Application definition
@@ -115,6 +122,13 @@ REST_FRAMEWORK = {
     'rest_framework.authentication.BasicAuthentication',
     ]
 }
+
+AUTHENTICATION_BACKEND = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -145,3 +159,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 AUTH_USER_MODEL = "accounts.User"
 
 
+SITE_ID = 1 
+
+LOGIN_REDIRECT_URL = 'todo:home'
+ 
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True

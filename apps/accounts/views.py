@@ -1,16 +1,15 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
+from django.contrib.auth import  login, logout
 from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth.views import LoginView
-from django.views.generic import CreateView, ListView, View
+from django.views.generic import CreateView
 
 
 import uuid
 
-from accounts.models import User
 from .forms import RegisterUserForm
-from .mixins import AuthMixin, RegitsterMixin
+from .mixins import RegitsterMixin
 
 
 class register_user(RegitsterMixin,CreateView):
@@ -60,21 +59,3 @@ class login_user(LoginView):
 		return redirect('todo:home')
 
 
-class Token(AuthMixin,ListView):
-	'''
-		Token page
-	'''
-	template_name="account/token.html"
-	def get_queryset(self):
-		token = self.request.user.token
-		return token
-
-class ChangeToken(AuthMixin,View):
-	'''
-		Token generator page
-	'''
-	def get(self,reqest):
-		User.objects.filter(username=self.request.user.username).update(
-			token= uuid.uuid4().hex.upper()[0:12]
-		)
-		return redirect("account:token")

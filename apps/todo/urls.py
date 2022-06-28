@@ -9,6 +9,10 @@ from .views.project_views import (listProject, ListProjectTask,
 from .views.routine_views import (listRoutine,
                                      CreateRoutine, UpdateRoutine, DeleteRoutine, )
 
+from .views.token_views import(
+    ChangeToken, Token
+)
+
 
 app_name = "todo"
 
@@ -31,5 +35,8 @@ urlpatterns = [
     path("delete-project/<str:token>/",DeleteProject.as_view(),name="DeleteProject"),
     path("delete-routine/<str:token>/",DeleteRoutine.as_view(),name="DeleteRoutine"),
     
-    path("search/",SearchTask.as_view(),name="SearchTask")
+    path("search/",SearchTask.as_view(),name="SearchTask"),
+
+    path('token/', Token.as_view(),name="token"),
+    path('token/change/', ChangeToken.as_view(),name="change-token")
 ]
