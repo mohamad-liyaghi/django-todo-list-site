@@ -9,8 +9,8 @@ import uuid
 
 from .serializers import TaskSerializer,TaskCreateSerializer,TaskDerailSerializer,RegisterUserSerializer
 from todo.models import task
-from account.models import User
-from account.models import User
+from accounts.models import User
+from accounts.models import User
 
 class ApiHomeView(APIView):
     '''

@@ -8,7 +8,7 @@ from django.views.generic import CreateView, ListView, View
 
 import uuid
 
-from account.models import User
+from accounts.models import User
 from .forms import RegisterUserForm
 from .mixins import AuthMixin, RegitsterMixin
 

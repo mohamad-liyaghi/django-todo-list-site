@@ -2,7 +2,7 @@ from rest_framework import serializers
 import uuid
 
 from todo.models import task
-from account.models import User
+from accounts.models import User
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:

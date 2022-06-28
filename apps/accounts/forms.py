@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from account.models import User
+from accounts.models import User
 from django import forms
 class RegisterUserForm(UserCreationForm):
     first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
