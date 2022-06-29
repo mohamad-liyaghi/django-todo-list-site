@@ -12,12 +12,13 @@
 {% endif %}
 	<h1>Register</h1>
 <br/>
-		<form action="{% url 'account:register_user' %}" method=POST>
+		<form action="{% url 'account_signup' %}" method=POST>
 			{% csrf_token %}
-			{{ form.first_name|as_crispy_field }}<hr>
-			{{ form.last_name|as_crispy_field }}<hr>
-			{{ form.password1|as_crispy_field }}<hr>
-			{{ form.password2|as_crispy_field }}<hr>
+			{{ form.first_name | as_crispy_field }}<hr><br>
+			{{ form.last_name | as_crispy_field }}<hr><br>
+			{{ form.email | as_crispy_field }}<hr><br>
+			{{ form.password1 | as_crispy_field }}
+
 
 
 <br/><br/>
