@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (ApiHomeView,ApiView,
                     TaskView,TaskAdd,TaskDetail,TaskDelete,TaskUpdateStatus,
-                    tbLoginApi, tbRegisterApi, tbLogoutApi, TaskAutoDelete)
+                    tbLoginApi, tbRegisterApi, tbLogoutApi, TaskAutoDelete, tbLoginEmailApi)
 app_name = "api"
 urlpatterns= [
     path("",ApiHomeView.as_view(),name="home-api"),
@@ -13,6 +13,7 @@ urlpatterns= [
     path("delete/<str:token>/<str:owner>/",TaskDelete.as_view(), name="task-delete"),
     path("auto-delete/<str:owner>/",TaskAutoDelete.as_view(), name="task-auto-delete"),
     path("tb-login/<str:username>/<str:token>/<int:userid>/",tbLoginApi, name="tb-login"),
+    path("tb-login-email/<str:email>/<str:token>/<int:userid>/",tbLoginEmailApi, name="tb-login-email"),
     path("tb-logout/<str:username>/<str:token>/<int:userid>/",tbLogoutApi, name="tb-logout"),
     path("tb-register/",tbRegisterApi.as_view(), name="tb-register"),
 ]

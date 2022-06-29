@@ -108,6 +108,21 @@ def tbLoginApi(request, username, token, userid):
     else:
         return JsonResponse({"error" : "user does not exist"})
 
+def tbLoginEmailApi(request, email, token, userid):
+    '''
+        This page check if a user is registered or no
+        then it will be proccessed in the telegram bot
+    '''
+    user = User.objects.filter(Q(token=token) & Q(email=email)).first()
+    if user:
+        if user.telegram_id is None:
+            user.telegram_id = userid
+            user.save()
+            return JsonResponse({"found" : "user exist in db"})
+        else:
+            return JsonResponse({"login-error": "user is already logged in"})
+    else:
+        return JsonResponse({"error" : "user does not exist"})
 
 def tbLogoutApi(request, username, token, userid):
     '''
@@ -124,6 +139,7 @@ def tbLogoutApi(request, username, token, userid):
             return JsonResponse({"userid-error": "user id is wrong"})
     else:
         return JsonResponse({"error" : "user does not exist"})
+
 
 class tbRegisterApi(CreateAPIView):
     '''
