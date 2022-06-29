@@ -6,7 +6,9 @@
 <br/>
   <form method="post">
       {% csrf_token %}
-      {{ form|crispy }}<br/>
+      
+      {{ form.login | as_crispy_field }}<br/>
+      {{ form.password | as_crispy_field }}<br/>
 
       <button class="btn btn-secondary" type="submit">Log In</button>
   </form>

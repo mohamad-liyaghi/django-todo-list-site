@@ -123,11 +123,10 @@ REST_FRAMEWORK = {
     ]
 }
 
-AUTHENTICATION_BACKEND = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend"
 )
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
