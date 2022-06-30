@@ -77,13 +77,3 @@ def TaskUpdateStatus(request, token, owner):
         return JsonResponse({'done': 'Task updated successfully'}, status=200)
     else:
         return JsonResponse({'error': 'Task is already done'}, status=401)
-
-
-
-
-
-def ApiView(request):
-    '''
-        a Task documentation page
-    '''
-    return render(request,"todo/api_list.html")

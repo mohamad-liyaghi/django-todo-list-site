@@ -1,13 +1,19 @@
 from rest_framework import serializers
 import uuid
 
-from todo.models import task
+from todo.models import task, project
 from accounts.models import User
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = task
         fields = ("name","token","done")
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = project
+        fields = ("name","token","deadline")
+
 
 class TaskCreateSerializer(serializers.ModelSerializer):
     class Meta:

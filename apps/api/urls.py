@@ -1,7 +1,7 @@
 from django.urls import path
 from .views.task_views import (TaskView, TaskAdd, TaskDetail, TaskDelete, TaskUpdateStatus, TaskAutoDelete)
 from .views.other_views import (ApiHomeView, tbLoginApi, tbLoginEmailApi, tbLogoutApi, tbRegisterApi, ApiView)
-
+from .views.project_views import (ProjectView)
 
 app_name = "api"
 
@@ -10,6 +10,8 @@ urlpatterns= [
     path("api/", ApiView, name="api-list"),
 
     path("task-list/<str:owner>/", TaskView.as_view(), name="task-api"),
+    path("project-list/<str:owner>/", ProjectView.as_view(), name="project-api"),
+
     path("create-task/<str:owner>/", TaskAdd.as_view(), name="task-add"),
     path("detail-task/<str:token>/<str:owner>/", TaskDetail.as_view(), name="task-detail"),
     path("update-task/<str:token>/<str:owner>/",TaskUpdateStatus, name="task-update"),
