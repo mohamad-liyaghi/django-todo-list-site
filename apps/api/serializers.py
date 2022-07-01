@@ -20,10 +20,22 @@ class TaskCreateSerializer(serializers.ModelSerializer):
         model = task
         fields = ("name","detail","time_to_start")
 
+class ProjectCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = project
+        fields = ("name","detail","deadline")
+
+
 class TaskDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = task
         fields = ("name","detail","time_to_start","done","token")
+
+class ProjectDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = project
+        fields = ("name","detail","deadline","status","task","token")
+
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:

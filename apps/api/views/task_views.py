@@ -46,7 +46,7 @@ class TaskDetail(APIView):
     serializer_class = TaskCreateSerializer
     def get(self,request,owner,token):
         queryset = task.objects.filter(Q(token=token) & Q(owner__token=owner))
-        serializer = TaskDerailSerializer(queryset, many=True)
+        serializer = TaskDetailSerializer(queryset, many=True)
         return Response(serializer.data)
 
 class TaskDelete(APIView):
