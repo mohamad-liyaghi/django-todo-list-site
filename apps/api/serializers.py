@@ -1,7 +1,7 @@
 from rest_framework import serializers
 import uuid
 
-from todo.models import task, project
+from todo.models import task, project, routine
 from accounts.models import User
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -14,6 +14,10 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = project
         fields = ("name","token","deadline")
 
+class RoutineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = routine
+        fields = ("title","detail","token")
 
 class TaskCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,6 +29,10 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
         model = project
         fields = ("name","detail","deadline")
 
+class RoutineCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = routine
+        fields = ("title","detail","time", "days")
 
 class TaskDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,6 +44,10 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
         model = project
         fields = ("name","detail","deadline","status","task","token")
 
+class RoutineDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = routine
+        fields = ("title","detail","token","days","time")
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
