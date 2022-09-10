@@ -1,10 +1,10 @@
 from django import forms
 from django.forms import ModelForm
-from .models import task, project, routine 
+from .models import Task, project, routine
 
 class TodoForm(ModelForm):
 	class Meta:
-		model = task
+		model = Task
 		fields = "__all__"
 		widgets = {
 			'name': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Tasks Name'}),
@@ -19,7 +19,7 @@ class ProjectForm(ModelForm):
 
 class ProjectTaskForm(ModelForm):
 	class Meta:
-		model = task
+		model = Task
 		fields = "__all__"
 
 class RoutineForm(ModelForm):

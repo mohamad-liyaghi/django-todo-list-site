@@ -6,7 +6,7 @@ from django.db.models import Q
 
 import uuid
 
-from task.models import task
+from task.models import Task
 from task.forms import TodoForm
 from task.mixins import UserTodoAccess, DeleteTodoMixin
 
@@ -21,7 +21,7 @@ class TaskList(LoginRequiredMixin, ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        return task.objects.filter(owner=self.request.user).order_by("time_to_start", "done")
+        return Task.objects.filter(owner=self.request.user).order_by("time", "status")
 
 
 class CreateTask(LoginRequiredMixin, FormView):
@@ -47,11 +47,11 @@ class UpdateTask(LoginRequiredMixin, UserTodoAccess, UpdateView):
     '''
 
     template_name = 'task/update_task.html'
-    fields = ["name", "detail", "time_to_start", "token", "done"]
+    fields = ["title", "detail", "time", "token", "status"]
     success_url = reverse_lazy('task:home')
 
     def get_object(self):
-        return get_object_or_404(task, token=self.kwargs['token'])
+        return get_object_or_404(Task, token=self.kwargs['token'])
 
 
 
@@ -60,20 +60,20 @@ class DeleteTask(LoginRequiredMixin, DeleteTodoMixin, DeleteView):
         Delete a task
     '''
 
-    model = task
+    model = Task
     success_url = reverse_lazy('task:home')
     template_name = "task/delete_task.html"
 
     def get_object(self):
-        return get_object_or_404(task, token=self.kwargs["token"], owner=self.request.user)
+        return get_object_or_404(Task, token=self.kwargs["token"], owner=self.request.user)
 
 
 class SearchTask(ListView):
-    model = task
+    model = Task
     template_name = "base/search.html"
 
     def get_queryset(self):
         query = self.request.GET.get("nav_search")
-        object_list = task.objects.filter(Q(name__icontains=query))
+        object_list = Task.objects.filter(Q(name__icontains=query))
         return object_list.filter(owner=self.request.user)
 

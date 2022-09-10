@@ -8,25 +8,25 @@ from rest_framework.response import Response
 import uuid
 
 from api.serializers import TaskSerializer, TaskCreateSerializer, TaskDetailSerializer
-from task.models import task
+from task.models import Task
 from accounts.models import User
 
 class TaskView(ListAPIView):
     '''
         Show all tasks
     '''
-    model = task
+    model = Task
     serializer_class = TaskSerializer
     def get_queryset(self):
         owner = self.kwargs["owner"]
-        object = task.objects.filter(Q(owner__token=owner))
+        object = Task.objects.filter(Q(owner__token=owner))
         return object
 
 class TaskAdd(CreateAPIView):
     '''
         Create task
     '''
-    queryset = task.objects.all()
+    queryset = Task.objects.all()
     serializer_class = TaskCreateSerializer
     def create(self,request,owner):
         data = self.request.data
@@ -42,10 +42,10 @@ class TaskDetail(APIView):
     '''
         Your tasks detail
     '''
-    queryset = task.objects.all()
+    queryset = Task.objects.all()
     serializer_class = TaskCreateSerializer
     def get(self,request,owner,token):
-        queryset = task.objects.filter(Q(token=token) & Q(owner__token=owner))
+        queryset = Task.objects.filter(Q(token=token) & Q(owner__token=owner))
         serializer = TaskDetailSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -55,7 +55,7 @@ class TaskDelete(APIView):
     '''
     def get(self,request,token,owner):
         try:
-            task.objects.filter(Q(token=token) & Q(owner__token=owner)).delete()
+            Task.objects.filter(Q(token=token) & Q(owner__token=owner)).delete()
             return Response("Task  deleted")
         except:return Response("no such task found")
 
@@ -70,7 +70,7 @@ class TaskAutoDelete(APIView):
 
 
 def TaskUpdateStatus(request, token, owner):
-    object = task.objects.filter(Q(token=token) & Q(owner__token=owner)).first()
+    object = Task.objects.filter(Q(token=token) & Q(owner__token=owner)).first()
     if object.done is not True:
         object.done = True
         object.save()

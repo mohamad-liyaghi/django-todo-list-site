@@ -8,7 +8,7 @@ from api.serializers import ProjectSerializer, ProjectCreateSerializer, ProjectD
 
 import uuid
 
-from task.models import project, task
+from task.models import project, Task
 from accounts.models import User
 
 class ProjectView(ListAPIView):
@@ -69,7 +69,7 @@ class ProjectAddTask(APIView):
     def post(self, request, owner, project_token, task_token):
         try:
             project_model = project.objects.filter(Q(token= project_token) & Q(owner__token=owner)).first()
-            task_model = task.objects.filter(Q(token= task_token)).first()
+            task_model = Task.objects.filter(Q(token= task_token)).first()
             project_model.task.add(task_model)
             return JsonResponse({"done" : "task added to project"})
         except:

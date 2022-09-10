@@ -35,7 +35,7 @@
 								        		<h5 class="card-title">{{tasks.name}}</h5>
 								        		<hr>
 								        		<li>{{tasks.detail}}</li>
-												<li>time: {{tasks.time_to_start|naturaltime}}</li>
+												<li>time: {{tasks.time|naturaltime}}</li>
 								        		{%if tasks.done == False%}
 								        			<li>Status : Unfinished </li>
 												{%else%}
