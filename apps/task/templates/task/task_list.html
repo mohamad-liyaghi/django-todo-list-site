@@ -14,18 +14,18 @@
 			  <a class="nav-link active" aria-current="page" href="{%url 'task:home'%}">Tasks</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link" href="{%url 'task:listProject' %}">Projects</a>
+			  <a class="nav-link" href="#">Projects</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" aria-current="page" href="{%url 'task:listRoutine' %}">Routine</a>
+				<a class="nav-link" aria-current="page" href="#">Routine</a>
 			  </li>
 			<li class="nav-item">
-				<a class="nav-link" aria-current="page" href="{%url 'task:CreateTask' %}">Add Task</a>
+				<a class="nav-link" aria-current="page" href="#">Add Task</a>
 			  </li>
 		  </ul>
     		{%if object_list.count == 0%}
     			<h4>No tasks available... </h4>
-    			<br><a class="btn btn-secondary" href="{%url 'task:CreateTask'%}">Create new one!</a>
+    			<br><a class="btn btn-secondary" href="{%url 'task:create_task'%}">Create new one!</a>
     		{%else%}
 		    	{%for tasks in object_list%}
 	    				{{tasks.count}}
@@ -42,8 +42,8 @@
 													<li>Status : Done</li>
 												{%endif%}
 								        			<br>
-								        			<a href="{% url 'task:updateTask' tasks.token %}" class="btn btn-outline-secondary btn-sm">Datail</a>
-													<a href="{%url 'task:DeleteTask'  tasks.token %}" class="btn btn-outline-danger btn-sm">Delete</a>
+								        			<a href="{% url 'task:update_task' tasks.token %}" class="btn btn-outline-secondary btn-sm">Datail</a>
+													<a href="{%url 'task:delete_task'  tasks.token %}" class="btn btn-outline-danger btn-sm">Delete</a>
 								        	  </div>
 									</td>
 								</table>

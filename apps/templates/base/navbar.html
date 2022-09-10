@@ -7,23 +7,6 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {% if user.is_authenticated %}
-        <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Add
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{%url 'task:CreateTask'%}">Add Task</a>
-          <a class="dropdown-item" href="{%url 'task:CreateProject'%}">Add Project</a>
-          <a class="dropdown-item" href="{%url 'task:CreateRoutine'%}">Add Routine</a>
-          <div class="dropdown-divider"></div>
-        </div>
-      </li>
-              <li class="nav-item">
-          <a class="nav-link" href="{% url 'task:token' %}">Token</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{%url 'api:api-list'%}">API</a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
         </li>
@@ -40,7 +23,7 @@
 
       </ul>
         {%if request.user.is_authenticated%}
-          <form class="d-flex" method="get" action="{%url 'task:SearchTask'%}">
+          <form class="d-flex" method="get" action="{%url 'task:search_task'%}">
               {% csrf_token %}
               <input class="form-control me-2" type="search" placeholder="Search Tasks" aria-label="Search" name="nav_search">
               <button class="btn btn-outline-secondary" type="submit">Search</button>
