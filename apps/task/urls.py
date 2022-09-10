@@ -14,7 +14,7 @@ from .views.token_views import(
 )
 
 
-app_name = "todo"
+app_name = "task"
 
 urlpatterns = [
     path("",home_page.as_view(),name="home"),

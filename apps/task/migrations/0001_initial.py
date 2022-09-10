@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
                 ('detail', models.TextField(blank=True)),
                 ('token', models.CharField(blank=True, max_length=12, unique=True)),
                 ('time', models.TimeField()),
-                ('days', models.ManyToManyField(blank=True, to='todo.week')),
+                ('days', models.ManyToManyField(blank=True, to='task.week')),
                 ('owner', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
                 ('deadline', models.DateField()),
                 ('status', models.BooleanField(default=False)),
                 ('owner', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ('task', models.ManyToManyField(blank=True, to='todo.task')),
+                ('task', models.ManyToManyField(blank=True, to='task.task')),
             ],
         ),
     ]

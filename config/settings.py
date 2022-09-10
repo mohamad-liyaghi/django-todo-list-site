@@ -18,7 +18,7 @@ import sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
-LOGIN_REDIRECT_URL = "todo:home"
+LOGIN_REDIRECT_URL = "task:home"
 LOGIN_URL = "account_login"
 LOGOUT_REDIRECT_URL = "account_login"
 # Quick-start development settings - unsuitable for production
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'allauth.account',
 
     'apps.accounts.apps.AccountsConfig',
-    'apps.todo.apps.TodoConfig',
+    'apps.task.apps.TodoConfig',
    
 ]
 
@@ -160,7 +160,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 SITE_ID = 1 
 
-LOGIN_REDIRECT_URL = 'todo:home'
+LOGIN_REDIRECT_URL = 'task:home'
  
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_USERNAME_REQUIRED = False

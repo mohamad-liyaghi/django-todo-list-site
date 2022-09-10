@@ -89,4 +89,4 @@ def ApiView(request):
     '''
         a Task documentation page
     '''
-    return render(request,"todo/api_list.html")
+    return render(request,"task/api_list.html")

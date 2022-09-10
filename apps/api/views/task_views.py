@@ -8,7 +8,7 @@ from rest_framework.response import Response
 import uuid
 
 from api.serializers import TaskSerializer, TaskCreateSerializer, TaskDetailSerializer
-from todo.models import task
+from task.models import task
 from accounts.models import User
 
 class TaskView(ListAPIView):

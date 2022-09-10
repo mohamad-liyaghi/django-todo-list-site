@@ -8,7 +8,7 @@ class UserTodoAccess():
 		if  self_task.owner  == self.request.user:
 			return super().dispatch(request, *args, **kwargs)
 		else:
-			return redirect("todo:home")
+			return redirect("task:home")
 
 class DeleteTodoMixin():
 	def dispatch(self, request, token, *args, **kwargs):
@@ -16,7 +16,7 @@ class DeleteTodoMixin():
 		if self_task.owner == self.request.user:
 			return super().dispatch(request, *args, **kwargs)
 		else:
-			return redirect("todo:home")
+			return redirect("task:home")
 
 
 class UserProjectAccess():
@@ -25,7 +25,7 @@ class UserProjectAccess():
 		if  self_project.owner  == self.request.user:
 			return super().dispatch(request, *args, **kwargs)
 		else:
-			return redirect("todo:home")
+			return redirect("task:home")
 
 class DeleteProjectMixin():
 	def dispatch(self, request, token, *args, **kwargs):
@@ -33,7 +33,7 @@ class DeleteProjectMixin():
 		if self_project.owner == self.request.user:
 			return super().dispatch(request, *args, **kwargs)
 		else:
-			return redirect("todo:home")
+			return redirect("task:home")
 
 class UserRoutineAccess():
 	def dispatch(self, request, token, *args, **kwargs):
@@ -41,7 +41,7 @@ class UserRoutineAccess():
 		if  self_routine.owner  == self.request.user:
 			return super().dispatch(request, *args, **kwargs)
 		else:
-			return redirect("todo:home")
+			return redirect("task:home")
 
 class DeleteRoutineMixin():
 	def dispatch(self, request, token, *args, **kwargs):
@@ -49,7 +49,7 @@ class DeleteRoutineMixin():
 		if self_routine.owner == self.request.user:
 			return super().dispatch(request, *args, **kwargs)
 		else:
-			return redirect("todo:home")
+			return redirect("task:home")
 
 
 #Token mixin
@@ -71,4 +71,4 @@ class RegitsterMixin():
         if not self.request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
         else:
-            return redirect("todo:home")
+            return redirect("task:home")

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 import uuid
 
-from todo.models import task, project, routine
+from task.models import task, project, routine
 from accounts.models import User
 
 class TaskSerializer(serializers.ModelSerializer):

@@ -5,15 +5,15 @@ from django.urls import reverse_lazy
 
 import uuid
 
-from todo.models import routine
-from todo.forms import RoutineForm
-from todo.mixins import UserRoutineAccess, DeleteRoutineMixin
+from task.models import routine
+from task.forms import RoutineForm
+from task.mixins import UserRoutineAccess, DeleteRoutineMixin
 
 class CreateRoutine(LoginRequiredMixin, FormView):
 	'''
 		This is the page to create a routine
 	'''
-	template_name = "todo/routine/createRoutine.html"
+	template_name = "task/routine/createRoutine.html"
 	form_class = RoutineForm
 	
 	def form_valid(self, form):
@@ -22,15 +22,15 @@ class CreateRoutine(LoginRequiredMixin, FormView):
 		unsaved_form.token = uuid.uuid4().hex.upper()[0:12]
 		unsaved_form.save()
 		form.save_m2m()
-		return redirect("todo:listRoutine")
+		return redirect("task:listRoutine")
 
 class UpdateRoutine(LoginRequiredMixin, UserRoutineAccess, UpdateView):
 	'''
 		This is the page to update a routine
 	'''
-	template_name = 'todo/routine/updateRoutine.html'
+	template_name = 'task/routine/updateRoutine.html'
 	fields = ["title", "detail", "token" ,"time", "days"]
-	success_url = reverse_lazy('todo:listRoutine')
+	success_url = reverse_lazy('task:listRoutine')
 
 	def get_object(self):
 		return get_object_or_404(routine, token=self.kwargs['token'])
@@ -39,8 +39,8 @@ class DeleteRoutine(LoginRequiredMixin, DeleteRoutineMixin, DeleteView):
 	'''
 		This is the page to delete a routine
 	'''
-	success_url = reverse_lazy('todo:listRoutine')
-	template_name = "todo/routine/DeleteRoutine.html"
+	success_url = reverse_lazy('task:listRoutine')
+	template_name = "task/routine/DeleteRoutine.html"
 
 	def get_object(self):
 		object = get_object_or_404(routine, token=self.kwargs['token'])
@@ -51,7 +51,7 @@ class listRoutine(LoginRequiredMixin, ListView):
 		This is the page to list all the routines
 	'''
 
-	template_name = 'todo/routine/listRoutine.html'
+	template_name = 'task/routine/listRoutine.html'
 	paginate_by = 2
 
 	def get_queryset(self):

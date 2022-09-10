@@ -8,7 +8,7 @@ from api.serializers import ProjectSerializer, ProjectCreateSerializer, ProjectD
 
 import uuid
 
-from todo.models import project, task
+from task.models import project, task
 from accounts.models import User
 
 class ProjectView(ListAPIView):

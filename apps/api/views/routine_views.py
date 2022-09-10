@@ -8,7 +8,7 @@ from rest_framework.response import Response
 import uuid
 
 from api.serializers import RoutineSerializer, RoutineCreateSerializer, RoutineDetailSerializer
-from todo.models import routine
+from task.models import routine
 from accounts.models import User
 
 class RoutineView(ListAPIView):

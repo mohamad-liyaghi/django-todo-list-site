@@ -3,7 +3,7 @@ from django.views.generic import ListView, View
 import uuid
 
 from accounts.models import User
-from todo.mixins import AuthMixin
+from task.mixins import AuthMixin
 
 class Token(AuthMixin,ListView):
 	'''
