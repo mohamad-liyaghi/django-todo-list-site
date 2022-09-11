@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Task, project, routine
+from .models import Task, project
 
 class TodoForm(ModelForm):
 	class Meta:
@@ -22,7 +22,3 @@ class ProjectTaskForm(ModelForm):
 		model = Task
 		fields = "__all__"
 
-class RoutineForm(ModelForm):
-	class Meta:
-		model = routine
-		fields = "__all__"

@@ -1,7 +1,8 @@
 from rest_framework import serializers
 import uuid
 
-from task.models import Task, project, routine
+from task.models import Task, project
+from routine.models import Routine
 from accounts.models import User
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -16,7 +17,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class RoutineSerializer(serializers.ModelSerializer):
     class Meta:
-        model = routine
+        model = Routine
         fields = ("title","detail","token")
 
 class TaskCreateSerializer(serializers.ModelSerializer):
@@ -31,7 +32,7 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
 
 class RoutineCreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = routine
+        model = Routine
         fields = ("title","detail","time", "days")
 
 class TaskDetailSerializer(serializers.ModelSerializer):
@@ -46,7 +47,7 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 
 class RoutineDetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = routine
+        model = Routine
         fields = ("title","detail","token","days","time")
 
 class RegisterUserSerializer(serializers.ModelSerializer):

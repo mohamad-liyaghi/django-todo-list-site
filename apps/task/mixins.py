@@ -1,5 +1,5 @@
 from django.shortcuts import redirect ,get_object_or_404
-from .models import Task, project, routine
+from .models import Task, project
 
 
 class UserTodoAccess():
@@ -35,21 +35,6 @@ class DeleteProjectMixin():
 		else:
 			return redirect("task:home")
 
-class UserRoutineAccess():
-	def dispatch(self, request, token, *args, **kwargs):
-		self_routine = get_object_or_404(routine, token= token)
-		if  self_routine.owner  == self.request.user:
-			return super().dispatch(request, *args, **kwargs)
-		else:
-			return redirect("task:home")
-
-class DeleteRoutineMixin():
-	def dispatch(self, request, token, *args, **kwargs):
-		self_routine = get_object_or_404(routine, token= token)
-		if self_routine.owner == self.request.user:
-			return super().dispatch(request, *args, **kwargs)
-		else:
-			return redirect("task:home")
 
 
 #Token mixin

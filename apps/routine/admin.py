@@ -1,3 +1,5 @@
 from django.contrib import admin
+from routine.models import Routine
 
-# Register your models here.
+
+admin.site.register(Routine)
