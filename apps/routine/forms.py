@@ -3,5 +3,5 @@ from routine.models import Routine
 
 class RoutineForm(forms.ModelForm):
 	class Meta:
-		model = routine
+		model = Routine
 		fields = "__all__"

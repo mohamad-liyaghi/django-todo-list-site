@@ -11,21 +11,21 @@
 		<h4>Your routines:</h4>
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-			  <a class="nav-link"  href="{%url 'todo:home'%}">Tasks</a>
+			  <a class="nav-link"  href="{%url 'task:home'%}">Tasks</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link" aria-current="page" href="{%url 'todo:listProject' %}">Projects</a>
+			  <a class="nav-link" aria-current="page" href="#">Projects</a>
 			</li>
             <li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="{%url 'todo:listRoutine' %}">Routine</a>
+				<a class="nav-link active" aria-current="page" href="{%url 'routine:routine_list' %}">Routine</a>
 			  </li>
 			<li class="nav-item">
-				<a class="nav-link" aria-current="page" href="{%url 'todo:CreateRoutine' %}">Add Routine</a>
+				<a class="nav-link" aria-current="page" href="{%url 'routine:create_routine' %}">Add Routine</a>
 			  </li>
 		  </ul>
     		{%if object_list.count == 0%}
     			<h4>No routines available... </h4>
-    			<br><a class="btn btn-secondary" href="{%url 'todo:CreateRoutine'%}">Create new one!</a>
+    			<br><a class="btn btn-secondary" href="{%url 'routine:create_routine'%}">Create new one!</a>
     		{%else%}
 		    	{%for routine in object_list%}
 	    				{{routine.count}}
@@ -36,10 +36,10 @@
 								        		<hr>
 								        		<li>{{routine.detail}}</li> 
                                                 <li>{{routine.time}}</li>
-                                                <li>Days: {% for day in routine.days.all%}{{day}} {%endfor%}</li>
+                                                <li>Repeat: {{ routine.get_repeat_display }} </li>
 								        			<br>
-													<a href="{% url 'todo:updateRoutine' routine.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
-													<a href="{%url 'todo:DeleteRoutine' routine.token%}" class="btn btn-outline-danger btn-sm">Delete</a>
+													<a href="{% url 'routine:update_routine' routine.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
+													<a href="{%url 'routine:delete_routine' routine.token%}" class="btn btn-outline-danger btn-sm">Delete</a>
 								        	  </div>
 									</td>
 								</table>
@@ -53,11 +53,11 @@
 
 										  {% if not search %}
 										  <li class="page-item">
-											  <a class="page-link" href="{% url 'todo:listRoutine' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+											  <a class="page-link" href="{% url 'routine:routine_list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
 										  </li>
 										  {% else %}
 											<li class="page-item">
-											  <a class="page-link" href="{% url 'todo:listRoutine' %}?{{search}}&page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+											  <a class="page-link" href="{% url 'routine:routine_list' %}?{{search}}&page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
 										  </li>
 										  {% endif %}
 										{% else %}
@@ -66,12 +66,12 @@
 										</li>
 										{% endif %} 
 										{% for object in page_obj.paginator.page_range %}
-											<li class="page-item"><a class="page-link" href="{% url 'todo:listRoutine' %}?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+											<li class="page-item"><a class="page-link" href="{% url 'routine:routine_list' %}?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
 										{% endfor %} 
 										{% if page_obj.has_next %}
 										  {% if not search %}
 										  <li class="page-item">
-											  <a class="page-link" href="{% url 'todo:listRoutine' %}?page={{ page_obj.next_page_number }}">Next</a>
+											  <a class="page-link" href="{% url 'routine:routine_list' %}?page={{ page_obj.next_page_number }}">Next</a>
 										  </li>
 										  {% else %}
 											<li class="page-item">

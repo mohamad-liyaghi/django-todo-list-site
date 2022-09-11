@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Routine</title>
+    <title>update Routine</title>
 </head>
 <body>
     {%block content%}
@@ -17,16 +17,16 @@
 					        		<hr>
 					        		<div class="mb-3">
 						        		<li>{{form.detail|as_crispy_field}}</li><hr>
-						        	
-					        		<li>{{form.time|as_crispy_field}}</li><hr>
-                                    <li>{{form.days}}</li><hr>
-									</div>
+                                        <li>{{form.time|as_crispy_field}}</li><hr>
+                                        <li>{{form.repeat}}</li><hr>
+					        		</div>
 					        		<br>
 					        		<button  class="btn btn-outline-success btn-sm">Save</button>
 								</div>
 						</td>
 					</table>
 			    	</form>
+			
 	    <br>
     {%endblock%}
 </body>
