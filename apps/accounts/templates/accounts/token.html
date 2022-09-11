@@ -1,0 +1,9 @@
+{%extends 'base/base.html'%}
+  <title>Token</title>
+{% load crispy_forms_tags %}
+
+{% block content %}
+You token is token: {{ object }}
+<br><hr>
+<a href="{%url 'accounts:token-generator'%}"><input class="btn btn-danger" type="button" value="Revoke"></a>
+{% endblock %}
