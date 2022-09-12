@@ -27,7 +27,7 @@
 													<li>Status : Finished</li>
 												{%endif%}
 								        			<br>
-								        			<a href="{% url 'todo:updateTask' task.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
+								        			<a href="{% url 'task:update_task' task.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
 													<a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
 								        	  </div>
 									</td>
@@ -35,7 +35,7 @@
 				
 					{%endfor%}
 			  {% endif %}
-              <a href="{% url 'todo:home' %}" class="btn btn-outline-secondary btn-sm">Home page</a>
+              <a href="{% url 'project:project_list' %}" class="btn btn-outline-secondary btn-sm">main page</a>
 
     {%endblock%}
 </body>

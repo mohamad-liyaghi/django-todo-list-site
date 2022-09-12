@@ -11,21 +11,21 @@
 		<h4>Your Projects:</h4>
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-			  <a class="nav-link"  href="{%url 'todo:home'%}">Tasks</a>
+			  <a class="nav-link"  href="{%url 'task:home'%}">Tasks</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link active" aria-current="page" href="{%url 'todo:listProject' %}">Projects</a>
+			  <a class="nav-link active" aria-current="page" href="{%url 'project:project_list' %}">Projects</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" aria-current="page" href="{%url 'todo:listRoutine' %}">Routine</a>
+				<a class="nav-link" aria-current="page" href="{%url 'routine:routine_list' %}">Routine</a>
 			  </li>
 			<li class="nav-item">
-				<a class="nav-link" aria-current="page" href="{%url 'todo:CreateProject' %}">Add Project</a>
+				<a class="nav-link" aria-current="page" href="{%url 'project:create_project' %}">Add Project</a>
 			  </li>
 		  </ul>
     		{%if object_list.count == 0%}
     			<h4>No Projects available... </h4>
-    			<br><a class="btn btn-secondary" href="{%url 'todo:CreateProject'%}">Create new one!</a>
+    			<br><a class="btn btn-secondary" href="{%url 'project:create_project'%}">Create new one!</a>
     		{%else%}
 		    	{%for project in object_list%}
 	    				{{project.count}}
@@ -42,10 +42,10 @@
 													<li>Status : Finished</li>
 												{%endif%}
 								        			<br>
-                                                    <a href="{%url 'todo:listProjectTask' project.token %}" class="btn btn-outline-secondary btn-sm">Tasks</a>
-                                                    <a href="{%url 'todo:CreateProjectTask' project.token %}" class="btn btn-outline-secondary btn-sm">Add Task</a>
-													<a href="{% url 'todo:updateProject' project.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
-													<a href="{%url 'todo:DeleteProject' project.token%}" class="btn btn-outline-danger btn-sm">Delete</a>
+                                                    <a href="{%url 'project:project_task_list' project.token %}" class="btn btn-outline-secondary btn-sm">Tasks</a>
+                                                    <a href="{%url 'project:create_project_task' project.token %}" class="btn btn-outline-secondary btn-sm">Add Task</a>
+													<a href="{% url 'project:update_project' project.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
+													<a href="{%url 'project:delete_project' project.token%}" class="btn btn-outline-danger btn-sm">Delete</a>
 								        	  </div>
 									</td>
 								</table>
@@ -59,11 +59,11 @@
 
 										  {% if not search %}
 										  <li class="page-item">
-											  <a class="page-link" href="{% url 'todo:listProject' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+											  <a class="page-link" href="{% url 'project:project_list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
 										  </li>
 										  {% else %}
 											<li class="page-item">
-											  <a class="page-link" href="{% url 'todo:listProject' %}?{{search}}&page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+											  <a class="page-link" href="{% url 'project:project_list' %}?{{search}}&page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
 										  </li>
 										  {% endif %}
 										{% else %}
@@ -72,16 +72,16 @@
 										</li>
 										{% endif %} 
 										{% for object in page_obj.paginator.page_range %}
-											<li class="page-item"><a class="page-link" href="{% url 'todo:listProject' %}?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+											<li class="page-item"><a class="page-link" href="{% url 'project:project_list' %}?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
 										{% endfor %} 
 										{% if page_obj.has_next %}
 										  {% if not search %}
 										  <li class="page-item">
-											  <a class="page-link" href="{% url 'todo:listProject' %}?page={{ page_obj.next_page_number }}">Next</a>
+											  <a class="page-link" href="{% url 'project:project_list' %}?page={{ page_obj.next_page_number }}">Next</a>
 										  </li>
 										  {% else %}
 											<li class="page-item">
-											  <a class="page-link" href="{% url 'todo:listProject' %}?{{search}}&page={{ page_obj.next_page_number }}">Next</a>
+											  <a class="page-link" href="{% url 'project:project_list' %}?{{search}}&page={{ page_obj.next_page_number }}">Next</a>
 										  </li>
 										  {% endif %}
 										{% else %}
