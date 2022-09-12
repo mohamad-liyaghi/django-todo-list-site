@@ -8,18 +8,19 @@ from api.serializers import ProjectSerializer, ProjectCreateSerializer, ProjectD
 
 import uuid
 
-from task.models import project, Task
+from task.models import  Task
+from project.models import Project
 from accounts.models import User
 
 class ProjectView(ListAPIView):
     '''
         Show all projects
     '''
-    model = project
+    model = Project
     serializer_class = ProjectSerializer
     def get_queryset(self):
         owner = self.kwargs["owner"]
-        object = project.objects.filter(Q(owner__token=owner))
+        object = Project.objects.filter(Q(owner__token=owner))
         return object
 
 
@@ -28,7 +29,7 @@ class ProjectAdd(CreateAPIView):
     '''
         Create project
     '''
-    queryset = project.objects.all()
+    queryset = Project.objects.all()
     serializer_class = ProjectCreateSerializer
     def create(self,request,owner):
         data = self.request.data
@@ -44,11 +45,11 @@ class ProjectDetail(APIView):
     '''
         Project datail
     '''
-    queryset = project.objects.all()
+    queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializer
 
     def get(self,request,owner,token):
-        queryset = project.objects.filter(Q(token=token) & Q(owner__token=owner))
+        queryset = Project.objects.filter(Q(token=token) & Q(owner__token=owner))
         serializer = ProjectDetailSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -58,7 +59,7 @@ class ProjectDelete(APIView):
     '''
     def get(self,request,token,owner):
         try:
-            project.objects.filter(Q(token=token) & Q(owner__token=owner)).delete()
+            Project.objects.filter(Q(token=token) & Q(owner__token=owner)).delete()
             return Response("project  deleted")
         except:return Response("no such project found")
 
@@ -68,7 +69,7 @@ class ProjectAddTask(APIView):
     '''
     def post(self, request, owner, project_token, task_token):
         try:
-            project_model = project.objects.filter(Q(token= project_token) & Q(owner__token=owner)).first()
+            project_model = Project.objects.filter(Q(token= project_token) & Q(owner__token=owner)).first()
             task_model = Task.objects.filter(Q(token= task_token)).first()
             project_model.task.add(task_model)
             return JsonResponse({"done" : "task added to project"})
