@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'apps.accounts.apps.AccountsConfig',
     'apps.task.apps.TodoConfig',
     'apps.routine.apps.RoutineConfig',
-
+    'apps.project.apps.ProjectConfig',
    
 ]
 
