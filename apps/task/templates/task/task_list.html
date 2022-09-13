@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>home page</title>
+    {% block title %}Task List{% endblock %}
 </head>
 <body>
     {%block content%}
@@ -23,31 +23,30 @@
 				<a class="nav-link" aria-current="page" href="#">Add Task</a>
 			  </li>
 		  </ul>
-    		{%if object_list.count == 0%}
-    			<h4>No tasks available... </h4>
-    			<br><a class="btn btn-secondary" href="{%url 'task:create_task'%}">Create new one!</a>
-    		{%else%}
-		    	{%for tasks in object_list%}
-	    				{{tasks.count}}
-						    	<table class="table table-striped table-hover table-bordered">
-							        <td>
-							        		  <div class="card-body">
-								        		<h5 class="card-title">{{tasks.name}}</h5>
-								        		<hr>
-								        		<li>{{tasks.detail}}</li>
-												<li>time: {{tasks.time|naturaltime}}</li>
-								        		{%if tasks.done == False%}
-								        			<li>Status : Unfinished </li>
-												{%else%}
-													<li>Status : Done</li>
-												{%endif%}
-								        			<br>
-								        			<a href="{% url 'task:update_task' tasks.token %}" class="btn btn-outline-secondary btn-sm">Datail</a>
-													<a href="{%url 'task:delete_task'  tasks.token %}" class="btn btn-outline-danger btn-sm">Delete</a>
-								        	  </div>
-									</td>
-								</table>
-				
+		    	{%for task in object_list%}
+						<table class="table table-striped table-hover table-bordered">
+							<td>
+									  <div class="card-body">
+										<h5 class="card-title">{{ task.name }}</h5>
+										<hr>
+										<li>{{ task.detail }}</li>
+										<li>time: {{task.time|naturaltime }}</li>
+										{% if not task.status %}
+											<li>Status : Unfinished </li>
+										{% else %}
+											<li>Status : Done</li>
+										{% endif %}
+
+										  <li>Token: {{ task.token }}</li>
+											<br>
+											<a href="{% url 'task:update_task' task.token %}" class="btn btn-outline-secondary btn-sm">Datail</a>
+											<a href="{%url 'task:delete_task'  task.token %}" class="btn btn-outline-danger btn-sm">Delete</a>
+									  </div>
+							</td>
+						</table>
+					{% empty %}
+						<h4>No tasks available... </h4>
+    					<br><a class="btn btn-secondary" href="{%url 'task:create_task'%}">Create new one!</a>
 					{%endfor%}
 								{% if is_paginated %}
 								<hr>
@@ -91,8 +90,7 @@
 								</nav>
 								{% endif %}
 				
-			  {% endif %}
-			
+
 
     {%endblock%}
 </body>

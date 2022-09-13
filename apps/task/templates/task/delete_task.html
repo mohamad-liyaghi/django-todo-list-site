@@ -1,14 +1,15 @@
 {%extends 'base/base.html'%}
 
-<title>Delete Todo</title>
+{% block title %}Delete Task {% endblock %}
+
 {% block content %}
-			{%if request.user == object.owner%}
+			{% if request.user == task.owner %}
 				<form method="post">{% csrf_token %}
 				    <p >Are you sure you wanna delete this Task??</p>
 				    <input type="submit" value="Delete" class="btn btn-danger">
 				</form>
 			{%else%}
-				<h1>You dont have access to do this!!</h1>
+				<h1>Permission Denied</h1>
 			{%endif	%}
 
 {% endblock %}

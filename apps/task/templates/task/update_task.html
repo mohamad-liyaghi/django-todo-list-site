@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>update page</title>
+    {% block title %}Update Task{% endblock %}
 </head>
 <body>
     {%block content%}
@@ -20,7 +20,6 @@
 						        	
 					        		<li>{{form.time|as_crispy_field}}</li><hr>
 				
-									<li>{{form.token|as_crispy_field}}</li><hr>
 					        		<li>{{form.status|as_crispy_field}}</li><hr>
 					        		</div>
 					        		<br>

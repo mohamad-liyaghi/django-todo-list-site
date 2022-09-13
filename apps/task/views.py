@@ -18,9 +18,12 @@ class TaskList(LoginRequiredMixin, ListView):
 
     template_name = 'task/task_list.html'
     paginate_by = 2
+    context_object_name = "tasks"
 
     def get_queryset(self):
-        return Task.objects.filter(owner=self.request.user).order_by("time", "status")
+        return Task.objects.filter(
+            owner=self.request.user
+        ).order_by("time", "status")
 
 
 class CreateTask(LoginRequiredMixin, FormView):
@@ -40,17 +43,19 @@ class CreateTask(LoginRequiredMixin, FormView):
         return redirect('task:home')
 
 
+
 class UpdateTask(LoginRequiredMixin, UpdateView):
     '''
         Update a task
     '''
 
     template_name = 'task/update_task.html'
-    fields = ["title", "detail", "time", "token", "status"]
+    fields = ["title", "detail", "time", "status"]
     success_url = reverse_lazy('task:home')
 
     def get_object(self):
-        return get_object_or_404(Task, token=self.kwargs['token'])
+        return get_object_or_404(Task, token=self.kwargs['token'],
+                                 owner=self.request.user)
 
 
 
@@ -64,12 +69,14 @@ class DeleteTask(LoginRequiredMixin, DeleteView):
     template_name = "task/delete_task.html"
 
     def get_object(self):
-        return get_object_or_404(Task, token=self.kwargs["token"], owner=self.request.user)
+        return get_object_or_404(Task, token=self.kwargs["token"],
+                                 owner=self.request.user)
 
 
 class SearchTask(ListView):
     model = Task
     template_name = "base/search.html"
+    context_object_name = "task"
 
     def get_queryset(self):
         query = self.request.GET.get("nav_search")
