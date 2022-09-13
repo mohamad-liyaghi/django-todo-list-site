@@ -26,7 +26,7 @@ class CreateRoutine(LoginRequiredMixin, FormView):
 
 class UpdateRoutine(LoginRequiredMixin, UpdateView):
     '''
-        This is the page to update a routine
+        Update a Routine
     '''
     template_name = 'routine/update_routine.html'
     fields = ["title", "detail", "time", "repeat"]
@@ -45,7 +45,8 @@ class DeleteRoutine(LoginRequiredMixin, DeleteView):
     template_name = "routine/delete_routine.html"
 
     def get_object(self):
-        object = get_object_or_404(Routine, token=self.kwargs['token'], owner=self.request.user)
+        object = get_object_or_404(Routine, token=self.kwargs['token'],
+                                   owner=self.request.user)
         return object
 
 
