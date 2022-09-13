@@ -8,7 +8,6 @@ import uuid
 
 from task.models import Task
 from task.forms import TodoForm
-from task.mixins import UserTodoAccess, DeleteTodoMixin
 
 
 
@@ -41,7 +40,7 @@ class CreateTask(LoginRequiredMixin, FormView):
         return redirect('task:home')
 
 
-class UpdateTask(LoginRequiredMixin, UserTodoAccess, UpdateView):
+class UpdateTask(LoginRequiredMixin, UpdateView):
     '''
         Update a task
     '''
@@ -55,7 +54,7 @@ class UpdateTask(LoginRequiredMixin, UserTodoAccess, UpdateView):
 
 
 
-class DeleteTask(LoginRequiredMixin, DeleteTodoMixin, DeleteView):
+class DeleteTask(LoginRequiredMixin, DeleteView):
     '''
         Delete a task
     '''
