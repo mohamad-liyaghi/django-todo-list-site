@@ -47,8 +47,16 @@ class DeleteProject(LoginRequiredMixin, DeleteView):
 
     def get_object(self):
         object = get_object_or_404(Project, token=self.kwargs['token'], owner=self.request.user)
-        object.task.all().delete()
         return object
+
+    def post(self, request, *args, **kwargs):
+        # Check if there is any task for project to delete
+
+        if (task:=self.get_object().task):
+            task.all().delete()
+            return super(DeleteProject, self).delete(request, *args, **kwargs)
+
+        return super(DeleteProject, self).delete(request, *args, **kwargs)
 
 
 class ProjectList(LoginRequiredMixin, ListView):

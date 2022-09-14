@@ -9,4 +9,4 @@ class Project(Base):
     task = models.ManyToManyField(Task, blank=True, related_name="project_task")
 
     def __str__(self):
-        return self.titlle
+        return self.title
