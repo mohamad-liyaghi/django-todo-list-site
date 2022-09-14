@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Project list page</title>
+    {% block title %}  Project List {% endblock %}
 </head>
 <body>
     {%block content%}
@@ -23,78 +23,76 @@
 				<a class="nav-link" aria-current="page" href="{%url 'project:create_project' %}">Add Project</a>
 			  </li>
 		  </ul>
-    		{%if object_list.count == 0%}
-    			<h4>No Projects available... </h4>
-    			<br><a class="btn btn-secondary" href="{%url 'project:create_project'%}">Create new one!</a>
-    		{%else%}
-		    	{%for project in object_list%}
-	    				{{project.count}}
-						    	<table class="table table-striped table-hover table-bordered">
-							        <td>
-							        		  <div class="card-body">
-								        		<h5 class="card-title">{{project.name}}</h5>
-								        		<hr>
-								        		<li>{{project.detail}}</li> 
-                                                <li>{{project.task.count}} Tasks Available</li>
-								        		{%if project.done == False%}
-								        			<li>Status : Unfinished </li>
-												{%else%}
-													<li>Status : Finished</li>
-												{%endif%}
-								        			<br>
-                                                    <a href="{%url 'project:project_task_list' project.token %}" class="btn btn-outline-secondary btn-sm">Tasks</a>
-                                                    <a href="{%url 'project:create_project_task' project.token %}" class="btn btn-outline-secondary btn-sm">Add Task</a>
-													<a href="{% url 'project:update_project' project.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
-													<a href="{%url 'project:delete_project' project.token%}" class="btn btn-outline-danger btn-sm">Delete</a>
-								        	  </div>
-									</td>
-								</table>
-				
-					{%endfor%}
-								{% if is_paginated %}
-								<hr>
-								<nav aria-label="Page navigation example">
-									<ul class="pagination justify-content-center pagination-sm">
-										{% if page_obj.has_previous %}
 
-										  {% if not search %}
-										  <li class="page-item">
-											  <a class="page-link" href="{% url 'project:project_list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
-										  </li>
-										  {% else %}
-											<li class="page-item">
-											  <a class="page-link" href="{% url 'project:project_list' %}?{{search}}&page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
-										  </li>
-										  {% endif %}
-										{% else %}
-										<li class="page-item disabled">
-											<a class="page-link" href="#" tabindex="-1">Previous</a>
-										</li>
-										{% endif %} 
-										{% for object in page_obj.paginator.page_range %}
-											<li class="page-item"><a class="page-link" href="{% url 'project:project_list' %}?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
-										{% endfor %} 
-										{% if page_obj.has_next %}
-										  {% if not search %}
-										  <li class="page-item">
-											  <a class="page-link" href="{% url 'project:project_list' %}?page={{ page_obj.next_page_number }}">Next</a>
-										  </li>
-										  {% else %}
-											<li class="page-item">
-											  <a class="page-link" href="{% url 'project:project_list' %}?{{search}}&page={{ page_obj.next_page_number }}">Next</a>
-										  </li>
-										  {% endif %}
-										{% else %}
-										<li class="page-item disabled">
-											<a class="page-link" href="#">Next</a>
-										</li>
-										{% endif %}
-									</ul>
-								</nav>
-								{% endif %}
-				
-			  {% endif %}
-			
+			{%for project in object_list%}
+					{{project.count}}
+							<table class="table table-striped table-hover table-bordered">
+								<td>
+										  <div class="card-body">
+											<h5 class="card-title">{{project.name}}</h5>
+											<hr>
+											<li>{{project.detail}}</li>
+											<li>{{project.task.count}} Tasks Available</li>
+											{%if project.done == False%}
+												<li>Status : Unfinished </li>
+											{%else%}
+												<li>Status : Finished</li>
+											{%endif%}
+											  <li>Token: {{project.token}} </li>
+												<br>
+												<a href="{%url 'project:project_task_list' project.token %}" class="btn btn-outline-secondary btn-sm">Tasks</a>
+												<a href="{%url 'project:create_project_task' project.token %}" class="btn btn-outline-secondary btn-sm">Add Task</a>
+												<a href="{% url 'project:update_project' project.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
+												<a href="{%url 'project:delete_project' project.token%}" class="btn btn-outline-danger btn-sm">Delete</a>
+										  </div>
+								</td>
+							</table>
+				{% empty %}
+					<h4>No Projects available... </h4>
+    				<br><a class="btn btn-secondary" href="{%url 'project:create_project'%}">Create new one!</a>
+				{%endfor%}
+
+				{% if is_paginated %}
+				<hr>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center pagination-sm">
+						{% if page_obj.has_previous %}
+
+						  {% if not search %}
+						  <li class="page-item">
+							  <a class="page-link" href="{% url 'project:project_list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+						  </li>
+						  {% else %}
+							<li class="page-item">
+							  <a class="page-link" href="{% url 'project:project_list' %}?{{search}}&page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+						  </li>
+						  {% endif %}
+						{% else %}
+						<li class="page-item disabled">
+							<a class="page-link" href="#" tabindex="-1">Previous</a>
+						</li>
+						{% endif %}
+						{% for object in page_obj.paginator.page_range %}
+							<li class="page-item"><a class="page-link" href="{% url 'project:project_list' %}?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+						{% endfor %}
+						{% if page_obj.has_next %}
+						  {% if not search %}
+						  <li class="page-item">
+							  <a class="page-link" href="{% url 'project:project_list' %}?page={{ page_obj.next_page_number }}">Next</a>
+						  </li>
+						  {% else %}
+							<li class="page-item">
+							  <a class="page-link" href="{% url 'project:project_list' %}?{{search}}&page={{ page_obj.next_page_number }}">Next</a>
+						  </li>
+						  {% endif %}
+						{% else %}
+						<li class="page-item disabled">
+							<a class="page-link" href="#">Next</a>
+						</li>
+						{% endif %}
+					</ul>
+				</nav>
+				{% endif %}
 
     {%endblock%}
 </body>

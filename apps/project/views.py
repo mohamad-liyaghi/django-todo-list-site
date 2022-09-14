@@ -79,7 +79,8 @@ class ProjectTaskList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         project_token = self.kwargs["token"]
-        project = get_object_or_404(Project, token=project_token, owner=self.request.user)
+        project = get_object_or_404(Project, token=project_token,
+                                    owner=self.request.user)
 
         return project.task.all()
 

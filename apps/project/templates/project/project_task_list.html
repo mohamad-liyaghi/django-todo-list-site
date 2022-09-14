@@ -4,38 +4,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Project task list page</title>
+    {% block title %} Project Task Page {% endblock %}
 </head>
 <body>
     {%block content%}
-		<h4>Projects task page:</h4>
-    		{%if object_list.count == 0%}
-    			<h4>No tasks Available </h4>
-    			<br><a class="btn btn-secondary" href="#">Create new one!</a>
-    		{%else%}
-		    	{%for task in object_list%}
-	    				{{task.count}}
-						    	<table class="table table-striped table-hover table-bordered">
-							        <td>
-							        		  <div class="card-body">
-								        		<h5 class="card-title">{{task.name}}</h5>
-								        		<hr>
-								        		<li>{{task.detail}}</li> 
-								        		{%if task.done == False%}
-								        			<li>Status : Unfinished </li>
-												{%else%}
-													<li>Status : Finished</li>
-												{%endif%}
-								        			<br>
-								        			<a href="{% url 'task:update_task' task.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
-													<a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
-								        	  </div>
-									</td>
-								</table>
-				
-					{%endfor%}
-			  {% endif %}
-              <a href="{% url 'project:project_list' %}" class="btn btn-outline-secondary btn-sm">main page</a>
+		<h4>Projects tasks:</h4>
+
+		{%for task in object_list%}
+				{{task.count}}
+						<table class="table table-striped table-hover table-bordered">
+							<td>
+									  <div class="card-body">
+										<h5 class="card-title">{{task.title}}</h5>
+										<hr>
+										<li>{{task.detail}}</li>
+										{%if not task.status %}
+											<li>Status : Unfinished </li>
+										{%else%}
+											<li>Status : Finished</li>
+										{%endif%}
+										  <li>Token: {{task.token}}</li>
+											<br>
+											<a href="{% url 'task:update_task' task.token %}" class="btn btn-outline-secondary btn-sm">Update</a>
+											<a href="{% url 'task:delete_task' task.token %}" class="btn btn-outline-danger btn-sm">Delete</a>
+									  </div>
+							</td>
+						</table>
+			{% empty %}
+				<h4>No tasks Available</h4>
+    			<br><a class="btn btn-secondary" href="{% url 'project:create_project_task' view.kwargs.token %}">Create new one!</a> <br>
+			{%endfor%}
+			<br><a href="{% url 'project:project_list' %}" class="btn btn-outline-secondary btn-sm">Project List</a>
 
     {%endblock%}
 </body>

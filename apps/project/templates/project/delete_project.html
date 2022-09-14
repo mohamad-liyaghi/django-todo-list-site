@@ -1,6 +1,7 @@
 {%extends 'base/base.html'%}
 
-<title>Delete Todo</title>
+{% block title %} Delete Project {% endblock %}
+
 {% block content %}
 				<form method="post">{% csrf_token %}
 				    <p >Are you sure you wanna delete this Project??</p>
