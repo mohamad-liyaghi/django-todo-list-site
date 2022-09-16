@@ -22,7 +22,9 @@ urlpatterns = [
     path("account/",include("allauth.urls")),
     path("auth/",include("apps.accounts.urls")),
 
-    path("api/v1/",include("apps.api.urls")),
+    path("api/v1/",include("apps.api.v1.urls")),
+    path("api/v2/",include("apps.api.v2.urls")),
+
 
     path("", include("apps.task.urls")),
     path("routine/", include("apps.routine.urls")),

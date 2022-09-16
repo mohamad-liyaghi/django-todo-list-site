@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 import uuid
 
-from api.serializers import RoutineSerializer, RoutineCreateSerializer, RoutineDetailSerializer
+from api.v1.serializers import RoutineSerializer, RoutineCreateSerializer, RoutineDetailSerializer
 from routine.models import Routine
 from accounts.models import User
 

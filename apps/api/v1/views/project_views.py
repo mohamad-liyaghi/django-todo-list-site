@@ -4,7 +4,7 @@ from django.db.models import Q
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.views import APIView
 
-from api.serializers import ProjectSerializer, ProjectCreateSerializer, ProjectDetailSerializer
+from api.v1.serializers import ProjectSerializer, ProjectCreateSerializer, ProjectDetailSerializer
 
 import uuid
 

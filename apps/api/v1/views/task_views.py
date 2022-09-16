@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 import uuid
 
-from api.serializers import TaskSerializer, TaskCreateSerializer, TaskDetailSerializer
+from api.v1.serializers import TaskSerializer, TaskCreateSerializer, TaskDetailSerializer
 from task.models import Task
 from accounts.models import User
 
