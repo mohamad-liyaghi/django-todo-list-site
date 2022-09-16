@@ -75,11 +75,14 @@ class DeleteTask(LoginRequiredMixin, DeleteView):
 
 class SearchTask(ListView):
     model = Task
-    template_name = "base/search.html"
+    template_name = "base/task_list.html"
     context_object_name = "task"
 
     def get_queryset(self):
         query = self.request.GET.get("nav_search")
-        object_list = Task.objects.filter(Q(name__icontains=query))
-        return object_list.filter(owner=self.request.user)
+
+        object = Task.objects.filter(Q(title__icontains=query)
+                                          & Q(owner=self.request.user))
+
+        return object
 
