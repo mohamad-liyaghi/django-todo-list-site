@@ -21,7 +21,33 @@ class UserCreateSerializer(BaseUserSerializer):
         return user
 
 
-class TaskListSerializer(serializers.ModelSerializer):
+class BaseListSerializer(serializers.ModelSerializer):
+    '''Base serializer fields for all List Serializers'''
     class Meta:
-        model = Task
         fields = ["title", "token", "status"]
+
+
+class BaseCreateSerializer(serializers.ModelSerializer):
+    '''Base serializer for creating objects'''
+    token = serializers.CharField(read_only=True)
+
+    class Meta:
+        fields = ["title", "detail", "time", "token"]
+
+    def save(self):
+        object = super().save()
+        object.token = random.randint(0, 9999999999)
+        object.owner = self.context['user']
+        object.save()
+        return object
+
+# --------------------Stuff related to Task Viewsets-----------------------------
+
+class TaskListSerializer(BaseListSerializer):
+    class Meta(BaseListSerializer.Meta):
+        model = Task
+
+
+class CreateTaskSerializer(BaseCreateSerializer):
+    class Meta(BaseCreateSerializer.Meta):
+        model = Task
