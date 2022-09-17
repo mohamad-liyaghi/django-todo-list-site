@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
 
+    'djoser',
+
     'apps.accounts.apps.AccountsConfig',
     'apps.task.apps.TodoConfig',
     'apps.routine.apps.RoutineConfig',
@@ -176,3 +178,15 @@ ACCOUNT_FORMS = {'signup': 'apps.accounts.forms.RegisterUserForm'}
     
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
