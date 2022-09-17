@@ -41,6 +41,14 @@ class BaseCreateSerializer(serializers.ModelSerializer):
         object.save()
         return object
 
+
+class BaseDetailSerializer(serializers.ModelSerializer):
+    '''Base Detail serializer class'''
+    token = serializers.CharField(read_only=True)
+
+    class Meta:
+        fields = ['title', 'detail', 'token', 'status', 'time']
+
 # --------------------Stuff related to Task Viewsets-----------------------------
 
 class TaskListSerializer(BaseListSerializer):
@@ -51,3 +59,16 @@ class TaskListSerializer(BaseListSerializer):
 class CreateTaskSerializer(BaseCreateSerializer):
     class Meta(BaseCreateSerializer.Meta):
         model = Task
+
+
+class TaskDetailSerializer(BaseDetailSerializer):
+
+    lookup_field = 'token'
+
+    extra_kwargs = {
+        'url': {'lookup_field': 'token'}
+    }
+
+    class Meta(BaseDetailSerializer.Meta):
+        model = Task
+
