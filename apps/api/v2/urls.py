@@ -9,5 +9,7 @@ app_name = "api_v2"
 router = routers.DefaultRouter()
 
 router.register('task', views.TaskViewSet, basename="task")
+router.register('routine', views.RoutineViewSet, basename="routine")
+
 
 urlpatterns = router.urls

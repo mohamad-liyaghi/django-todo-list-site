@@ -2,14 +2,16 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import TaskListSerializer, CreateTaskSerializer, TaskDetailSerializer
+from .serializers import (TaskListSerializer, CreateTaskSerializer, TaskDetailSerializer,
+                          RoutineListSerializer)
 
 from task.models import Task
+from routine.models import Routine
 
 
 
 class TaskViewSet(ModelViewSet):
-    '''Viewset For Task Model.'''
+    '''ViewSet For Task Model.'''
 
     permission_classes = [IsAuthenticated,]
     lookup_field = 'token'
@@ -35,3 +37,20 @@ class TaskViewSet(ModelViewSet):
     def get_serializer_context(self):
         return {'user': self.request.user}
 
+
+
+class RoutineViewSet(ModelViewSet):
+    '''List/Update/Delete/Detail of a routine'''
+
+    permission_classes = [IsAuthenticated, ]
+
+    def get_queryset(self):
+        # return all routines of a user
+        return Routine \
+            .objects \
+            .filter(owner=self.request.user) \
+            .order_by("status")
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return RoutineListSerializer

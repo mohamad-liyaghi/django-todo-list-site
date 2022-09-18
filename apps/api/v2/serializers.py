@@ -4,6 +4,7 @@ import random
 
 from task.models import Task
 
+from routine.models import Routine
 
 # override the SignUp serializer
 class UserCreateSerializer(BaseUserSerializer):
@@ -72,3 +73,7 @@ class TaskDetailSerializer(BaseDetailSerializer):
     class Meta(BaseDetailSerializer.Meta):
         model = Task
 
+# --------------------Serializers related to Routine ViewSet-----------------------------
+class RoutineListSerializer(BaseListSerializer):
+    class Meta(BaseListSerializer.Meta):
+        model = Routine
