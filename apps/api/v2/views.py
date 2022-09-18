@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (TaskListSerializer, CreateTaskSerializer, TaskDetailSerializer,
-                          RoutineListSerializer, CreateRoutineSerializer)
+                          RoutineListSerializer, CreateRoutineSerializer, RoutineDetailSerializer)
 
 from task.models import Task
 from routine.models import Routine
@@ -43,6 +43,7 @@ class RoutineViewSet(ModelViewSet):
     '''List/Update/Delete/Detail of a routine'''
 
     permission_classes = [IsAuthenticated, ]
+    lookup_field = "token"
 
     def get_queryset(self):
         # return all routines of a user
@@ -57,3 +58,6 @@ class RoutineViewSet(ModelViewSet):
 
         elif self.action == "create":
             return CreateRoutineSerializer
+
+        elif self.action in ["retrieve", "update", "partial_update"] :
+            return RoutineDetailSerializer

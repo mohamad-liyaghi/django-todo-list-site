@@ -83,3 +83,15 @@ class CreateRoutineSerializer(BaseCreateSerializer):
     class Meta(BaseCreateSerializer.Meta):
         model = Routine
         BaseCreateSerializer.Meta.fields += ["repeat"]
+
+
+class RoutineDetailSerializer(BaseDetailSerializer):
+
+    lookup_field = 'token'
+
+    extra_kwargs = {
+        'url': {'lookup_field': 'token'}
+    }
+
+    class Meta(BaseDetailSerializer.Meta):
+        model = Routine
