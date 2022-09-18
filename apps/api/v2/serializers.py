@@ -83,7 +83,7 @@ class RoutineListSerializer(BaseListSerializer):
 class CreateRoutineSerializer(BaseCreateSerializer):
     class Meta(BaseCreateSerializer.Meta):
         model = Routine
-        BaseCreateSerializer.Meta.fields += ["repeat"]
+        fields = BaseListSerializer.Meta.fields + ["task_count"]
 
 
 class RoutineDetailSerializer(BaseDetailSerializer):
@@ -105,8 +105,13 @@ class ProjectListSerializer(BaseListSerializer):
 
     class Meta(BaseListSerializer.Meta):
         model = Project
-        BaseListSerializer.Meta.fields += ["task_count"]
+        fields = BaseListSerializer.Meta.fields + ["task_count"]
 
     # calculate project tasks
     def calculate_project_tasks(self, project:Project):
         return project.task.count()
+
+
+class CreateProjectSerializer(BaseCreateSerializer):
+    class Meta(BaseCreateSerializer.Meta):
+        model = Project

@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (TaskListSerializer, CreateTaskSerializer, TaskDetailSerializer,
                           RoutineListSerializer, CreateRoutineSerializer, RoutineDetailSerializer,
-                          ProjectListSerializer)
+                          ProjectListSerializer, CreateProjectSerializer)
 
 from task.models import Task
 from routine.models import Routine
@@ -77,3 +77,6 @@ class ProjectViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.action == "list":
             return ProjectListSerializer
+
+        elif self.action == "create":
+            return CreateProjectSerializer
