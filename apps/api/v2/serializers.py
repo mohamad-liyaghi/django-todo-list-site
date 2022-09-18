@@ -5,6 +5,7 @@ import random
 from task.models import Task
 
 from routine.models import Routine
+from project.models import Project
 
 # override the SignUp serializer
 class UserCreateSerializer(BaseUserSerializer):
@@ -95,3 +96,17 @@ class RoutineDetailSerializer(BaseDetailSerializer):
 
     class Meta(BaseDetailSerializer.Meta):
         model = Routine
+# --------------------Serializers related to Project ViewSet-----------------------------
+class ProjectListSerializer(BaseListSerializer):
+    '''List of all Projects of a user'''
+
+    task_count = serializers.SerializerMethodField(
+        method_name='calculate_project_tasks')
+
+    class Meta(BaseListSerializer.Meta):
+        model = Project
+        BaseListSerializer.Meta.fields += ["task_count"]
+
+    # calculate project tasks
+    def calculate_project_tasks(self, project:Project):
+        return project.task.count()

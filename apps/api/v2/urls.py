@@ -10,6 +10,8 @@ router = routers.DefaultRouter()
 
 router.register('task', views.TaskViewSet, basename="task")
 router.register('routine', views.RoutineViewSet, basename="routine")
+router.register('project', views.ProjectViewSet, basename="project")
+
 
 
 urlpatterns = router.urls

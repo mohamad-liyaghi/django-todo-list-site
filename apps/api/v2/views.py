@@ -3,10 +3,12 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (TaskListSerializer, CreateTaskSerializer, TaskDetailSerializer,
-                          RoutineListSerializer, CreateRoutineSerializer, RoutineDetailSerializer)
+                          RoutineListSerializer, CreateRoutineSerializer, RoutineDetailSerializer,
+                          ProjectListSerializer)
 
 from task.models import Task
 from routine.models import Routine
+from project.models import Project
 
 
 
@@ -61,3 +63,17 @@ class RoutineViewSet(ModelViewSet):
 
         elif self.action in ["retrieve", "update", "partial_update"] :
             return RoutineDetailSerializer
+
+
+class ProjectViewSet(ModelViewSet):
+    '''List/Update/Delete and Detail of a project'''
+
+    def get_queryset(self):
+        return Project \
+            .objects \
+            .filter(owner=self.request.user) \
+            .order_by("status")
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return ProjectListSerializer
