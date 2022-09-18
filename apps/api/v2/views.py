@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (TaskListSerializer, CreateTaskSerializer, TaskDetailSerializer,
-                          RoutineListSerializer)
+                          RoutineListSerializer, CreateRoutineSerializer)
 
 from task.models import Task
 from routine.models import Routine
@@ -54,3 +54,6 @@ class RoutineViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.action == "list":
             return RoutineListSerializer
+
+        elif self.action == "create":
+            return CreateRoutineSerializer

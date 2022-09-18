@@ -77,3 +77,9 @@ class TaskDetailSerializer(BaseDetailSerializer):
 class RoutineListSerializer(BaseListSerializer):
     class Meta(BaseListSerializer.Meta):
         model = Routine
+
+
+class CreateRoutineSerializer(BaseCreateSerializer):
+    class Meta(BaseCreateSerializer.Meta):
+        model = Routine
+        BaseCreateSerializer.Meta.fields += ["repeat"]
