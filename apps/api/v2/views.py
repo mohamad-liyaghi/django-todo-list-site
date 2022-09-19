@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import (TaskListSerializer, CreateTaskSerializer, TaskDetailSerializer,
                           RoutineListSerializer, CreateRoutineSerializer, RoutineDetailSerializer,
                           ProjectListSerializer, CreateProjectSerializer, ProjectDetailSerializer)
+from rest_framework.decorators import action
 
 from task.models import Task
 from routine.models import Routine
@@ -70,13 +71,16 @@ class ProjectViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     lookup_field = "token"
 
+
     def get_queryset(self):
         return Project \
             .objects \
             .filter(owner=self.request.user) \
             .order_by("status")
 
+
     def get_serializer_class(self):
+
         if self.action == "list":
             return ProjectListSerializer
 
@@ -85,3 +89,22 @@ class ProjectViewSet(ModelViewSet):
 
         elif self.action in ["retrieve", "update", "partial_update"] :
             return ProjectDetailSerializer
+
+        elif self.action == "add_project_task":
+            if self.request.method == "POST":
+                return CreateTaskSerializer
+
+
+    @action(methods=["post"], detail=True, url_path="add-project-task")
+    def add_project_task(self, request, token):
+        '''Add a task for project'''
+
+        serializer = CreateTaskSerializer(data=request.data, context={'user': self.request.user})
+
+        serializer.is_valid(raise_exception=True)
+        data = serializer.save()
+
+        self.get_object().task.add(data)
+        self.get_object().save()
+
+        return Response(serializer.data)

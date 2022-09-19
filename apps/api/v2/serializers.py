@@ -25,6 +25,8 @@ class UserCreateSerializer(BaseUserSerializer):
 
 class BaseListSerializer(serializers.ModelSerializer):
     '''Base serializer fields for all List Serializers'''
+    token = serializers.CharField(read_only=True)
+
     class Meta:
         fields = ["title", "token", "status"]
 
