@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (TaskListSerializer, CreateTaskSerializer, TaskDetailSerializer,
                           RoutineListSerializer, CreateRoutineSerializer, RoutineDetailSerializer,
-                          ProjectListSerializer, CreateProjectSerializer)
+                          ProjectListSerializer, CreateProjectSerializer, ProjectDetailSerializer)
 
 from task.models import Task
 from routine.models import Routine
@@ -67,6 +67,8 @@ class RoutineViewSet(ModelViewSet):
 
 class ProjectViewSet(ModelViewSet):
     '''List/Update/Delete and Detail of a project'''
+    permission_classes = [IsAuthenticated, ]
+    lookup_field = "token"
 
     def get_queryset(self):
         return Project \
@@ -80,3 +82,6 @@ class ProjectViewSet(ModelViewSet):
 
         elif self.action == "create":
             return CreateProjectSerializer
+
+        elif self.action in ["retrieve", "update", "partial_update"] :
+            return ProjectDetailSerializer

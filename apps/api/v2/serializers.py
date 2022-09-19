@@ -115,3 +115,19 @@ class ProjectListSerializer(BaseListSerializer):
 class CreateProjectSerializer(BaseCreateSerializer):
     class Meta(BaseCreateSerializer.Meta):
         model = Project
+
+
+class ProjectDetailSerializer(BaseDetailSerializer):
+
+    lookup_field = 'token'
+
+    extra_kwargs = {
+        'url': {'lookup_field': 'token'},
+        'task' : {"read_only" : True},
+    }
+
+
+    class Meta(BaseDetailSerializer.Meta):
+        model = Project
+        fields = BaseDetailSerializer.Meta.fields + ["task"]
+        depth = 1
