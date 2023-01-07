@@ -38,7 +38,7 @@
 ### clone the project:
 
 ```commandline
-git clone https://github.com/Ml06py/django-todo-list.git
+git clone https://github.com/mohamad-liyaghi/django-todo-list-site.git
 ```
 
 ### now run it via docker
